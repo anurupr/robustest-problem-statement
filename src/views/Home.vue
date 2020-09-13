@@ -8,11 +8,8 @@
               <Profile />
             </template>            
           </column>
-          <!-- Post Box + News Feed -->
-          <column class="column__ct_6 column__xs__ct_12 column__sm__ct_12 column__md__ct_12">
-            <template v-if="isLoggedIn">
-              <PostBox />
-            </template>
+          <!-- News Feed -->
+          <column class="column__ct_6 column__xs__ct_12 column__sm__ct_12 column__md__ct_12">            
             <NewsFeed />
           </column>
       </row>
@@ -29,8 +26,7 @@ export default {
     name: 'Home',
     components: {
         Profile,
-        NewsFeed,
-        PostBox        
+        NewsFeed
     },
     computed: {
         ...mapState({
