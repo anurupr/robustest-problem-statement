@@ -5,7 +5,8 @@
 </template>
 <style scoped>
     .footer {
-        margin-top: 1rem;        
+        margin-top: 1rem;
+        flex-shrink: 0;      
     }
     
     .footer img {

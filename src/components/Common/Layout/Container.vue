@@ -10,7 +10,8 @@ export default {
 </script>
 <style scoped>
     .container {
-        padding: 0 15px;
+        padding: 15px;
+        flex: 1 0 auto;
     }
 
     @media screen and (max-width: 576px) {
