@@ -1,15 +1,11 @@
 <template>
-    <div class="footer">
+    <footer class="footer">
         Made with <span style="color: #e25555;">&#9829;</span> in <img :src="require('@/assets/vue_logo.png')" />
-    </div>
+    </footer>
 </template>
 <style scoped>
     .footer {
-        position: fixed;
-        bottom: 1rem;
-        left: 0;
-        right: 0;
-        margin: auto;        
+        margin-top: 1rem;        
     }
     
     .footer img {

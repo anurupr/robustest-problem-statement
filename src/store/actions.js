@@ -1,3 +1,4 @@
+import Posts from "@/api/Posts";
 export default {
     
     setLoading({ commit }) {        
@@ -34,5 +35,15 @@ export default {
                 }
             }, 500);
         })
+    },
+    loadPosts({commit, dispatch}) {
+        dispatch('setLoading');
+        Posts.getPosts()
+        .then((json) => {            
+            commit('SAVE_POSTS', json);
+            dispatch('resetLoading');
+        }).catch(error => {
+            throw new Error(`API ${error}`);
+        });
     }
   }

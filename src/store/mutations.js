@@ -15,5 +15,11 @@ export default {
     },
     [types.LOGIN_FAILURE]: (state) => {
         state.isLoggedIn = false;
+    },
+    [types.SAVE_POSTS]: (state, posts) => {
+        // sort posts in descending order of timestamp
+        posts.sort((a, b) => b.timestamp - a.timestamp);
+        console.log('posts', posts);
+        state.posts = posts;
     }
 }
