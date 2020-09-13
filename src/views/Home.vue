@@ -20,7 +20,6 @@
 import { mapState } from 'vuex'
 import Profile from "@/components/User/Profile"
 import NewsFeed from "@/components/Social/NewsFeed"
-import PostBox from "@/components/Social/PostBox"
 
 export default {
     name: 'Home',
