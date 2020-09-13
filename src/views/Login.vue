@@ -57,7 +57,7 @@ export default {
     form.login {
         background: #fff;
         padding: 2rem;
-        min-height: 20rem;
+        min-height: 30rem;
         max-width: 30rem;
         margin: 0 auto;
         border-radius: 5px;
