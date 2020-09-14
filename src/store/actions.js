@@ -45,5 +45,13 @@ export default {
         }).catch(error => {
             throw new Error(`API ${error}`);
         });
+    },
+    async addPost({ commit } , { post }) {
+        Posts.createPost({ post })
+        .then(() =>  {
+            commit('POST_ADD', post)
+        }).catch(error => {
+            throw new Error(`API ${error}`)
+        })
     }
   }

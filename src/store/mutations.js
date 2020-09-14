@@ -21,5 +21,8 @@ export default {
         posts.sort((a, b) => b.timestamp - a.timestamp);
         console.log('posts', posts);
         state.posts = posts;
+    },
+    [types.POST_ADD]: (state,post) => {
+        state.posts.unshift(post);   
     }
 }

@@ -12,5 +12,8 @@ export default {
             location: 'Bangalore, India',
             gravatar: utils.cgravatar('robustester@gmail.com')
         };
+    },
+    getLatestPostId: (state) => {
+        return (Math.max.apply(Math, state.posts.map(function(o) { return o.id; }))) + 1;
     }
 }

@@ -9,7 +9,10 @@
             </template>            
           </column>
           <!-- News Feed -->
-          <column class="column__ct_6 column__xs__ct_12 column__sm__ct_12 column__md__ct_12">            
+          <column class="main column__ct_6 column__xs__ct_12 column__sm__ct_12 column__md__ct_12">
+            <template v-if="isLoggedIn">
+              <PostBox />
+            </template>            
             <NewsFeed />
           </column>
       </row>
@@ -20,12 +23,15 @@
 import { mapState } from 'vuex'
 import Profile from "@/components/User/Profile"
 import NewsFeed from "@/components/Social/NewsFeed"
+import PostBox from "@/components/Social/PostBox"
+
 
 export default {
     name: 'Home',
     components: {
         Profile,
-        NewsFeed
+        NewsFeed,
+        PostBox
     },
     computed: {
         ...mapState({
@@ -34,3 +40,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+  .main {
+    flex-direction: column;
+  }
+</style>

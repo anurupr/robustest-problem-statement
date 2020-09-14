@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { formatDistance, fromUnixTime } from 'date-fns' 
+import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns' 
 
 export const md5 = (str) => {
     return crypto.createHash('md5').update(str).digest("hex")
@@ -11,5 +11,12 @@ export const  cgravatar = (email) => {
 
 export const fromAgo = (timestamp) => {
     return formatDistance(fromUnixTime(timestamp), new Date(), { addSuffix: true });
- }
- 
+}
+
+export const getutime = (t) => {
+    if (typeof t === 'undefined') {
+        t = new Date()
+    }
+
+    return getUnixTime(t)
+}
