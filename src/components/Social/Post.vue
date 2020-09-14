@@ -4,7 +4,7 @@
             <column class="column__ct_1  column__xs__ct_2 avatar">
                 <img :src="gravatar">
             </column>
-            <column class="column__ct_10  column__xs__ct_9">
+            <column class="column__ct_10  column__xs__ct_9 post-meta">
                 <span class="field username">{{ username }}</span>
                 <span class="field time">{{ timestamp }}</span>               
             </column>
@@ -198,6 +198,10 @@ export default {
     .commentbox__container,
     .comment__container {
         padding: 0;
+    }
+
+    .post-meta {
+        flex-direction: column;
     }
 
     

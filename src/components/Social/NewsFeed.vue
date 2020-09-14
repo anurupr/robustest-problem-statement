@@ -22,3 +22,9 @@ export default {
     
 }
 </script>
+<style scoped>
+    .nf {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
