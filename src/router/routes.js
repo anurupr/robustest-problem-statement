@@ -1,5 +1,6 @@
 import Login from '@/views/Login'
 import Home from '@/views/Home'
+import NotFound from '@/views/NotFound'
 import CreatePost from '@/components/Social/CreatePost'
 import EditPost from '@/components/Social/EditPost'
 import DeletePost from '@/components/Social/DeletePost'
@@ -59,7 +60,14 @@ const routes = [
       store.dispatch('logout')
       next('/')
     }
+  },
+  {
+    // matches everything else  
+    path: '*',
+    name: 'notFound ',
+    component: NotFound
   }
+  
 ]
 
 export default routes
