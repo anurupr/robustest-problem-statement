@@ -10,12 +10,12 @@
                     <ul>
                         <li >
                           <!-- @click.native is required to handle on click of router link -->
-                          <router-link :to='{ name: "edit-post", params: { id: postId } }' @click.native="toggleDropdown">
+                          <router-link :to='{ name: "edit-post", params: { id: postId } }' class="edit" @click.native="toggleDropdown">
                                <font-awesome-icon icon="edit" />Edit
                          </router-link>
                         </li>
                         <li>
-                          <router-link :to='{ name: "delete-post", params: { id: postId } }' @click.native="toggleDropdown">
+                          <router-link :to='{ name: "delete-post", params: { id: postId } }' class="delete"  @click.native="toggleDropdown">
                                <font-awesome-icon icon="trash" />Delete
                          </router-link>
                         </li>

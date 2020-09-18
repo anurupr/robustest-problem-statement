@@ -34,8 +34,9 @@ export default {
             if (this.validate()) {
                 
                 try {            
-                    await this.$store.dispatch('loginRequest', { username: this.username, password: this.password })                    
-                    this.$router.push('/');
+                    await this.$store.dispatch('loginRequest', { username: this.username, password: this.password })
+                    if (this.$route.path !== '/')                    
+                        this.$router.push('/');
                 } catch(msg) {                    
                     console.error('error', msg);
                 }

@@ -75,7 +75,8 @@ export default {
         save: function() {           
             // get content from element and save it in            
             this.updatePost(this.post)
-            this.$router.push('/')
+            if (this.$route.path !== '/')
+                this.$router.push('/')
         }
         
     },    
@@ -122,9 +123,11 @@ export default {
           // this ensures that all comments for posts are loaded properly, otherwise a
           // quite erratic behaviour is observed
           // https://vuejs.org/v2/guide/reactivity.html#Async-Update-Queue
-
-          await this.$nextTick()
-          this.loadComments(this.post.id)
+          // no need to call this in a editable post
+          if (!this.editable) {
+            await this.$nextTick()
+            this.loadComments(this.post.id)
+          }
       } 
 }
 </script>

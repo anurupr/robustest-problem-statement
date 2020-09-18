@@ -58,7 +58,7 @@ export default {
                 type: "error",
                 message: "Error getting posts. Try reloading the page"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })
     },
     async addPost({ commit, dispatch } , post) {
@@ -83,7 +83,7 @@ export default {
                 type: "error",
                 message: "Error creating post"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
             
         })
     },
@@ -131,7 +131,7 @@ export default {
                 type: "error",
                 message: "Error updating post. Please try again"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })
     },
     deletePost({ commit, dispatch, getters }, postId) {   
@@ -154,7 +154,7 @@ export default {
                 type: "error",
                 message: "Error deleting post. Please try again"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })
     },
     updateComment({ commit, dispatch, getters }, { postId, comment }) {
@@ -178,7 +178,7 @@ export default {
                 type: "error",
                 message: "Error updating comment. Please try again"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })
     },
     deleteComment({ commit, dispatch, getters}, { postId, commentId }) {
@@ -200,7 +200,7 @@ export default {
                 type: "error",
                 message: "Error deleting comment. Please try again"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })
     },
     addComment({ commit, dispatch, getters } , { postId, comment }) {
@@ -220,7 +220,7 @@ export default {
                 type: "error",
                 message: "Error adding comment. Please try again"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })
     },
     loadComments({ commit, dispatch, getters }, postId) {        
@@ -237,7 +237,7 @@ export default {
                 type: "error",
                 message: "Error getting comments. Try reloading the page"
             })
-            throw new Error(`API ${error}`)
+            console.log('error', error)
         })        
     },
     modalVisible({ commit }, visible) {

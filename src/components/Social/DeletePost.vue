@@ -27,12 +27,14 @@ export default {
             'modalVisible'
         ]),
         cancel() {
-            this.$router.push('/')
+            if (this.$route.path !== '/')
+                this.$router.push('/')
         },
         proceed() {
             this.deletePost(this.$route.params.id)
             // to ensure that user cannot navigate back to deleting this post after it is deleted
-            this.$router.replace('/')
+            if (this.$route.path !== '/')
+                this.$router.replace('/')
         },
         toggleModal() {
             this.showModal = !this.showModal

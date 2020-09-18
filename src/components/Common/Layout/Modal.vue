@@ -22,7 +22,8 @@ export default {
     },
     methods: {
         closeModal() {
-            this.$router.push('/')
+            if (this.$route.path !== '/')
+                this.$router.push('/')
         }
     }
 }

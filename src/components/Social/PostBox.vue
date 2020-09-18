@@ -22,7 +22,8 @@ export default {
                     comments: []      
                 }
                 this.addPost(post);
-                this.$router.push('/')
+                if (this.$route.path !== '/')
+                    this.$router.push('/')
             } else {
                 this.errorNotif({ message: 'Post cannot be empty'})
             }

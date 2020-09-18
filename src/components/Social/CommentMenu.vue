@@ -10,12 +10,12 @@
                     <ul>
                         <li >
                           <!-- @click.native is required to handle on click of router link -->
-                          <router-link :to='{ name: "edit-comment", params: { postId, id: commentId } }' @click.native="toggleDropdown">
+                          <router-link :to='{ name: "edit-comment", params: { postId, id: commentId } }' class="edit" @click.native="toggleDropdown">
                                <font-awesome-icon icon="edit" />Edit
                          </router-link>
                         </li>
                         <li>
-                          <router-link :to='{ name: "delete-comment", params: { postId, id: commentId  } }' @click.native="toggleDropdown">
+                          <router-link :to='{ name: "delete-comment", params: { postId, id: commentId  } }' class="delete" @click.native="toggleDropdown">
                                <font-awesome-icon icon="trash" />Delete
                          </router-link>
                         </li>
@@ -31,7 +31,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faEdit, faTrash)
 export default {
-    name: 'PostMenu',
+    name: 'CommentMenu',
     props: {
         postId: {
             type: Number,

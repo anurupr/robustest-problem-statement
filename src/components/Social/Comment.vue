@@ -1,5 +1,4 @@
 <template>
-<!-- :class="{ modaled: modal }" -->
     <div class="box nf-item comment" >
         <row>
             <column class="column__ct_1 column__xs__ct_2 avatar">
@@ -63,7 +62,8 @@ export default {
         save: function() {           
             // get content from element and save it in 
             this.updateComment({ postId: this.postId, comment: this.comment })
-            this.$router.push('/')            
+            if (this.$route.path !== '/')
+                this.$router.push('/')            
         }        
     },
     computed: {
@@ -143,17 +143,6 @@ export default {
     .avatar {
         justify-content: center;
         align-content: center;
-    }
-
-    .nf-item.comment.modaled {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-        width: 50%;
-        height: 20%;
     }
 
     .nf-item.comment .content input[type=text] {

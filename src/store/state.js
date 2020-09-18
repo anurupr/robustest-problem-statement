@@ -1,6 +1,6 @@
 export default () => {    
     return {
-        isLoading: true,
+        isLoading: false,
         isLoggedIn: false,
         posts: [],
         currentUser: null,

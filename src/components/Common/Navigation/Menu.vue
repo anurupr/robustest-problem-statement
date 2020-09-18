@@ -1,11 +1,14 @@
 <!-- Navigation Menu -->
 <template>
-    <ul class="menu">
-        <li class="menu-item clickable" v-if="isLoggedIn" @click="logout">
-            <span><font-awesome-icon icon="sign-out-alt" /> Logout</span>
+    <ul class="menu">        
+        <li class="menu-item" v-if="isLoggedIn">
+            <router-link class="logout" :to='{ name: "Logout" }'>
+                <font-awesome-icon icon="sign-out-alt" />
+                <span>Logout</span>
+            </router-link>            
         </li>
         <li class="menu-item" v-if="!isLoggedIn">
-            <router-link to="/login">
+            <router-link class="login" :to='{ name: "Login" }'>
                 <font-awesome-icon icon="sign-in-alt" />
                 <span>Login</span>
             </router-link>
@@ -23,14 +26,6 @@ export default {
         ...mapState([
             'isLoggedIn'
         ])
-    },
-    methods: {
-        ...mapActions({
-            logoutAction: 'logout' 
-        }),
-        logout() {
-            this.logoutAction()
-        }
     }
 }
 </script>

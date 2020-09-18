@@ -27,14 +27,16 @@ export default {
             'modalVisible'
         ]),
         cancel() {
-            this.$router.push('/')
+            if (this.$route.path !== '/')
+                this.$router.push('/')
         },
         proceed() {
             this.deleteComment({ 
                 postId: this.$route.params.postId,
                 commentId: this.$route.params.id
             })
-            this.$router.replace('/')
+            if (this.$route.path !== '/')
+                this.$router.replace('/')
         },
         toggleModal() {
             this.showModal = !this.showModal
