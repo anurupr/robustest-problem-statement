@@ -1,17 +1,31 @@
 <template>
     <div class="box" id="profile">
-        <div><img :src="user.gravatar" ></div>
-        <span class="name">{{ user.name }}</span>
-        <span class="location">{{ user.location }}</span>
+        <div><img :src="gravatar" ></div>
+        <span class="name">{{ name }}</span>
+        <span class="location">{{ location }}</span>
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
-    name: 'Profile',    
-    data() {
-        return {
-            user: this.$store.getters.getCurrentUser
+    name: 'Profile',
+    computed: {
+        ...mapGetters([
+            'getCurrentUser'
+        ]),
+        gravatar(){
+            return this.user.gravatar
+        },
+        name() {
+            return this.user.name
+        },
+        location() {
+            return this.user.location
+        },
+        user() {
+            return this.getCurrentUser
         }
+
     }
 }
 </script>
@@ -31,8 +45,6 @@ export default {
         font-weight: bold;
         font-size: 2.5rem;        
     }
-
-    /* .location {    } */
 
     #profile img {
         border-radius: 150px;

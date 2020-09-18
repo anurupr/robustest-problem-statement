@@ -58,3 +58,42 @@ html, body {
     background: #fff;
     border-radius: 5px;
   }
+
+  .separator {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn {
+    border-radius: 5px;    
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 0;
+    box-shadow: 0px 0px 15px -10px #000;
+    padding: 1rem 2rem; 
+    margin: 1rem 0;
+  }
+
+  .primary {
+    background: #33a2ff;
+    color: white;    
+  }
+  
+  .secondary {
+    background: #ddd;
+    color: #333;
+    box-shadow: none;
+  }
+
+  .empty {
+    min-height: 100px;
+  }
+
+  .centered {
+    align-items: center;
+    justify-content: center;
+  }

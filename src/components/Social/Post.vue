@@ -4,86 +4,90 @@
             <column class="column__ct_1  column__xs__ct_2 avatar">
                 <img :src="gravatar">
             </column>
-            <column class="column__ct_10  column__xs__ct_9 post-meta">
+            <column class="column__ct_10  column__xs__ct_9 meta">
                 <span class="field username">{{ username }}</span>
-                <span class="field time">{{ timestamp }}</span>               
+                <span class="field time">{{ timestamp }}</span>
+                <template v-if="!editable && isLoggedIn && userId == currentUserId">    
+                    <PostMenu :postId="postId" />
+                </template>
             </column>
         </row>
         <row>
-            <column class="column__ct_12">
+            <column class="column__ct_12 meta">
                 <template v-if="editable">
                     <input type="text" v-model="content">
-                    <button class="submit" v-on:click="save">Save</button>
+                    <button class="btn primary" v-on:click="save">Save</button>
                 </template>
                 <template v-else>
                     <p>{{ content }}</p>
                 </template>                
             </column>
         </row>
+        <template v-if="isLoggedIn && !editable">
+            <row>
+                <column class="column__ct_12 commentbox__container">
+                    <CommentBox :postId="postId" />
+                </column>
+            </row>            
+        </template>
+        <template v-if="comments.length > 0 && !editable">
+            <hr class="separator" />            
+            <row>
+                <column class="column__ct_12 comment__container meta">
+                    <Comment v-for="comment in comments" :key="'comment-' + comment.id" :comment="comment" :post="post"></Comment>
+                </column>
+            </row>
+        </template>
     </div>
 </template>
 <script>
 import { fromAgo } from '@/utils'
+import Comment from '@/components/Social/Comment'
+import CommentBox from '@/components/Social/CommentBox'
+import PostMenu from '@/components/Social/PostMenu'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
     name: 'Post',
-    props: ['post'],
+    props: {
+        post: {
+            type: Object           
+        },
+        editable: {
+            type: Boolean,
+            default: false
+        }
+    },
     components: {                
-        // Comment,
-        // CommentBox,
-        // PostMenu
+        Comment,
+        CommentBox,
+        PostMenu
     },
     methods: {
-        handleEmitEvent: function(ev) {
-            console.debug('handlingEmitEvent in Post component: ')
-            this.$emit("emit-event", ev)
-            switch(ev) {
-                case 'edit':
-                    this.edit()
-                    break
-                case 'delete':
-                    this.delete()
-                    break
-                default:
-                    break
-            }
-        },
-        edit: function() {
-            console.debug('editing post: ', this.post.id)
-            this.editable = true
-        },
-        delete: function() {
-            console.debug('deleting post: ', this.post.id)
-            // TODO confirm and then remove from store
-            this.$store.dispatch('deletePost', { postId: this.post.id })
+        ...mapActions([
+            'deletePost',
+            'updatePost',
+            'loadComments'
+        ]),
+        delete: function() {            
+            this.deletePost({ postId: this.post.id })
             
         },
-        save: function() {
-            this.editable = false
-            // get content from element and save it in
-            this.$store.dispatch('updatePost', { postId: this.post.id, content: this.content })
-        },
-        cancel: function() {
-            //revert changes
-            this.content = this.post.content
-            this.editable = false
+        save: function() {           
+            // get content from element and save it in            
+            this.updatePost(this.post)
+            this.$router.push('/')
         }
         
-    },
-    data() {
-        return {
-            content: null,
-            editable: false,
-            fromAgo(tstamp){
-                return fromAgo(tstamp)
-            }
-        }
-    },
+    },    
     computed: {
-      loggedIn() {
-        return this.$store.state.loggedIn
-      },
+      ...mapState([
+            'isLoggedIn'
+      ]),
+      ...mapGetters([
+          'getCurrentUser'
+      ]),
       currentUserId() {
-        return this.$store.getters.getCurrentUser.id
+        return this.getCurrentUser.id
       },
       gravatar() {
         return this.post.user.gravatar
@@ -98,15 +102,30 @@ export default {
         return this.post.user.id
       },
       comments() {
-        return this.post.comments
+        return this.post.comments || []
       },
       postId() {
         return this.post.id
-      }
-    },    
-    mounted(){      
-        this.content = this.post.content
-    }
+      },
+      content: {
+          get() {
+            return this.post.content
+          },
+          set(content) {
+            this.post.content = content
+          }
+      } 
+    },
+      async mounted() { 
+          // due to the async nature of vue's update queue, we need to wait until vue has finished updating
+          // to call the next getComments action
+          // this ensures that all comments for posts are loaded properly, otherwise a
+          // quite erratic behaviour is observed
+          // https://vuejs.org/v2/guide/reactivity.html#Async-Update-Queue
+
+          await this.$nextTick()
+          this.loadComments(this.post.id)
+      } 
 }
 </script>
 <style scoped> 
@@ -174,13 +193,11 @@ export default {
         display: flex;
     }
 
-    .nf-item .time,
-    .nf-item /deep/ .time {
+    .nf-item .time {
         font-size: 1.2rem;
     }
 
-    .nf-item .username,
-    .nf-item /deep/ .username {
+    .nf-item .username {
         color: steelblue;
     }
 
@@ -189,19 +206,26 @@ export default {
         right: 0;
     }
 
-    p[contenteditable="true"] {
-        border: 1px solid #aaa;
-        padding: 0.5em;
-        white-space: pre-wrap;
-    }
-
     .commentbox__container,
     .comment__container {
         padding: 0;
     }
 
-    .post-meta {
+    .meta {
         flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .avatar {
+        justify-content: center;
+        align-content: center;
+    }
+
+    .nf-item input[type=text] {
+        border: 1px solid #aaa;
+        width: 100%;
+        min-height: 40px;
+        margin: 1rem auto;
     }
 
     

@@ -12,7 +12,6 @@ import Container from '@/components/Common/Layout/Container'
 import Row from '@/components/Common/Layout/Row'
 import Popup from '@/components/Common/Interface/Popup'
 import TextBox from '@/components/Common/Input/TextBox'
-import Button from '@/components/Common/Input/Button'
 
 // Registering global components
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -24,7 +23,6 @@ Vue.component('column', Column)
 Vue.component('row', Row)
 Vue.component('popup', Popup)
 Vue.component('text-box', TextBox)
-Vue.component('btn', Button)
 
 Vue.directive('focus', {
   // When the bound element is inserted into the DOM...

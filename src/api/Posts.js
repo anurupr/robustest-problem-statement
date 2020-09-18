@@ -13,19 +13,22 @@ export default {
     createPost(post) {
         return api.req('/posts', api.buildPostParams(post)).then(api.jsonResponse)
     },
-    deletePost(post) {
-        return api.req(`/posts/${post.id}`, api.buildDeleteParams()).then(api.jsonResponse)
+    deletePost(postId) {
+        return api.req(`/posts/${postId}`, api.buildDeleteParams()).then(api.jsonResponse)
     },
     updatePost(post) {
         return api.req(`/posts/${post.id}`, api.buildPutParams(post)).then(api.jsonResponse)
     },
-    createComment(post) {
-        return this.updatePost(post);
+    getComments(postId) {
+        return api.req(`/posts/${postId}/comments`).then(api.jsonResponse)
     },
-    deleteComment(post) {        
-        return this.updatePost(post);
+    createComment(comment) {
+        return api.req(`/comments`, api.buildPostParams(comment)).then(api.jsonResponse)
     },
-    updateComment(post) {
-        return this.updatePost(post);
+    deleteComment(commentId) {        
+        return api.req(`/comments/${commentId}`, api.buildDeleteParams()).then(api.jsonResponse)
+    },
+    updateComment(comment) {
+        return api.req(`/comments/${comment.id}`, api.buildPutParams(comment)).then(api.jsonResponse)
     }
 }

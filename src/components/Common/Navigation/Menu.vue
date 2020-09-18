@@ -13,20 +13,23 @@
     </ul>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 library.add(faSignInAlt, faSignOutAlt)
 export default {
     name: 'Menu',
     computed: {
-        ...mapState({
-            isLoggedIn: 'isLoggedIn'
-        })
+        ...mapState([
+            'isLoggedIn'
+        ])
     },
     methods: {
+        ...mapActions({
+            logoutAction: 'logout' 
+        }),
         logout() {
-            this.$store.dispatch('logout');
+            this.logoutAction()
         }
     }
 }
@@ -43,6 +46,7 @@ export default {
         justify-content: center;
         align-items: flex-start;
         text-align: left;
+        margin: 0;
     }
 
     ul.menu li {
@@ -87,12 +91,7 @@ export default {
         display: none;
     } */
 
-    ul.menu.floating {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-    }
+   
 
     li.menu-item a > span {
         display: inline-block;

@@ -1,19 +1,11 @@
 <template>
-    <div class="progress-container" v-show="show">
-        <div class="progress"></div>
+    <div class="progress-container">     
         <img class="loader" :src="require('@/assets/loading.svg')" >
     </div>
 </template>
 <script>
 export default {
-    name: 'ActivityIndicator',
-    props: ['visible'],
-    computed: {
-        // default show false
-        show() {
-            return this.visible || false;
-        }
-    }
+    name: 'ActivityIndicator'
 }
 </script>
 <style scoped>
@@ -22,18 +14,6 @@ export default {
         position: fixed;
     }
 
-    .progress {        
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        height: 2px;
-        width: 0%;
-        -webkit-transition: width 0.2s, opacity 0.6s;
-        transition: width 0.2s, opacity 0.6s;
-        opacity: 1;
-        background-color: #73ccec;
-        z-index: 999999;
-    }
     .loader {        
         top: .5rem;
         right: .5rem;

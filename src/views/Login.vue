@@ -34,12 +34,9 @@ export default {
             if (this.validate()) {
                 
                 try {            
-                    let msg = await this.$store.dispatch('loginRequest', { username: this.username, password: this.password })
-                    // call popup with msg
+                    await this.$store.dispatch('loginRequest', { username: this.username, password: this.password })                    
                     this.$router.push('/');
-                    console.log('msg', msg);
-                } catch(msg) {
-                    // call popup with msg
+                } catch(msg) {                    
                     console.error('error', msg);
                 }
             }            
@@ -50,6 +47,13 @@ export default {
     },
     mounted(){        
         this.toggleModal()
+    },
+    beforeRouteLeave (to, from, next) {
+      this.toggleModal()
+      // called when the route that renders this component is about to
+      // be navigated away from.
+      // has access to `this` component instance.
+      next()
     }    
 }
 </script>

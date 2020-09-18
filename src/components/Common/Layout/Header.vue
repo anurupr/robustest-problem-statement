@@ -33,6 +33,7 @@ export default {
         width: 100%;
         margin-bottom: 2rem;
         min-height: 30px;
+        margin-top: 2rem;
     }
 
     header  > * {

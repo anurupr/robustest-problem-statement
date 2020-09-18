@@ -3,9 +3,8 @@ export default () => {
         isLoading: true,
         isLoggedIn: false,
         posts: [],
-        users: [],
-        user_posts: [],
-        user_comments: [],
-        currentUser: null
+        currentUser: null,
+        notifications: [],
+        isModalVisible: false
     }
 }

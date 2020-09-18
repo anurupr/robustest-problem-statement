@@ -4,20 +4,27 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
-const Post = () => import('@/components/Social/Post')
+import { mapState, mapActions } from 'vuex'
+import Post from '@/components/Social/Post'
 export default {
     name: 'NewsFeed',
     components: {
         Post
+    },
+    methods: {
+        ...mapActions([
+            'loadPosts'
+        ])
     },
     computed: {
         ...mapState({
             posts: 'posts'
         })
     },
-    mounted() {        
-        this.$store.dispatch('loadPosts')
+    mounted() {  
+        this.$nextTick(() => {      
+            this.loadPosts()
+        })
     }
     
 }

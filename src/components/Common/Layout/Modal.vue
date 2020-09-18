@@ -1,6 +1,6 @@
 <template> 
     <transition name="fade">
-        <div class="modal" v-show="show" :style="{width: width +'px', height: height +'px'}">
+        <div class="modal" v-show="show" :style="{width: width +'px', height: height +'px'}" @click.self="closeModal">
             <slot></slot>
         </div>
     </transition>
@@ -8,19 +8,21 @@
 <script>
 export default {
     name: 'Modal',
+    props: {
+        show: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
-        return {
-            show: false,
+        return {            
             width: window.innerWidth,
             height: window.innerHeight
         }
     },
     methods: {
-        showModal() {
-            this.show = true
-        },
-        hideModal() {
-            this.show = false
+        closeModal() {
+            this.$router.push('/')
         }
     }
 }

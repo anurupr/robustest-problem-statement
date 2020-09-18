@@ -1,26 +1,30 @@
 <template>
     <text-box :pholder="pholder" v-model="content">
-        <button class="submit" v-on:click="addPost">Post</button>
+        <button class="submit" v-on:click="add">Post</button>
     </text-box>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import { getutime } from '@/utils';
 export default {
     name: 'PostBox',
     methods: {
-        addPost: function() {
+        ...mapActions({
+            addPost: 'addPost',
+            errorNotif: 'addErrorNotif'
+        }),
+        add: function() {
             if (this.content != "") {
                 var post = {
-                    id: this.$store.getters.getLatestPostId,
                     content: this.content,
-                    user : this.$store.getters.getCurrentUser,
+                    user : this.getCurrentUser,
                     timestamp: getutime(),
                     comments: []      
                 }
-                this.$store.dispatch('addPost', { post });
+                this.addPost(post);
+                this.$router.push('/')
             } else {
-                console.error('content = ""')
-                // show error msg
+                this.errorNotif({ message: 'Post cannot be empty'})
             }
         }
     },
@@ -29,6 +33,11 @@ export default {
             pholder: "What's going on?",
             content: ""
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getCurrentUser'
+        ])
     }
 }
 </script>

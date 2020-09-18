@@ -1,9 +1,12 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ hoverflow: isModalVisible }">    
     <Header /> 
-    <template v-if="isLoading">
-      <ActivityIndicator />
-    </template>
+    
+    <ActivityIndicator v-show="isLoading" />
+    
+    <div class="notifs-container">
+      <popup v-for="notif in notifs" v-bind:key="notif.id" :id="notif.id" :message="notif.message" :type="notif.type" />
+    </div>
     <router-view></router-view>    
     <Footer />
   </div>
@@ -24,8 +27,22 @@ export default {
   },
   computed: {
     ...mapState({
-        isLoading: 'isLoading'
+        isLoading: 'isLoading',
+        notifs: 'notifications',
+        isModalVisible: 'isModalVisible'
     })
   }
 }
 </script>
+<style>
+  .notifs-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 999999;
+  }
+
+  .hoverflow {
+    overflow: hidden;
+  }
+</style>

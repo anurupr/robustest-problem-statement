@@ -6,6 +6,10 @@
             </column>
             <column class="column__ct_10 column__xs__ct_10">
                 <column class="column__ct_11 column__xs__ct_9 textbox__container">
+                    <!-- recommended method of using v-model with custom components -->
+                    <!-- when we declare the component we use <component v-model="varname" /> -->
+                    <!-- internally this is how it is handled -->
+                    <!-- refer to https://vuejs.org/v2/guide/components.html#Using-v-model-on-Components -->
                     <textarea v-bind:value="value" :placeholder="pholder" v-on:input="$emit('input', $event.target.value)" ></textarea>
                 </column>
                 <column class="column__ct_1 column__xs__ct_3 submit__container">
@@ -16,15 +20,28 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
     name: 'Box',
-    props: ['pholder', 'value'],
+    props: {
+        pholder: {
+            type: String,
+            required: true
+        },
+        value: {
+            type: String,
+            required: true
+        }
+    },
     computed: {
+        ...mapGetters([
+            'getCurrentUser'
+        ]),
         gravatar(){
             return this.user.gravatar
         },
         user() { 
-            return this.$store.getters.getCurrentUser
+            return this.getCurrentUser
         }
     },
     data()  {
@@ -87,9 +104,5 @@ export default {
     .text__box textarea,
     .text__box .submit {
         float: left;
-    }
-
-
-    @media screen and (max-width: 576px) {       
     }
 </style>
