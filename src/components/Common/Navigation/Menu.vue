@@ -1,11 +1,11 @@
 <!-- Navigation Menu -->
 <template>
-    <ul class="menu">        
+    <ul class="menu">
         <li class="menu-item" v-if="isLoggedIn">
             <router-link class="logout" :to='{ name: "Logout" }'>
                 <font-awesome-icon icon="sign-out-alt" />
                 <span>Logout</span>
-            </router-link>            
+            </router-link>
         </li>
         <li class="menu-item" v-if="!isLoggedIn">
             <router-link class="login" :to='{ name: "Login" }'>
@@ -16,7 +16,7 @@
     </ul>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 library.add(faSignInAlt, faSignOutAlt)
@@ -50,18 +50,18 @@ export default {
         text-align: center;
     }
 
-    ul.menu li /deep/  a {    
-        width: 100%;    
+    ul.menu li /deep/  a {
+        width: 100%;
     }
 
     li.menu-item.clickable > span {
-        cursor: pointer;        
+        cursor: pointer;
     }
 
     ul.menu li /deep/  a,
     li.menu-item.clickable > span {
        padding: .25rem;
-       border-radius: 5px;       
+       border-radius: 5px;
        display: inline-block;
        text-decoration: none;
        transition: all 200ms ease;
@@ -86,7 +86,7 @@ export default {
         display: none;
     } */
 
-   
+
 
     li.menu-item a > span {
         display: inline-block;

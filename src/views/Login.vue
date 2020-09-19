@@ -17,6 +17,7 @@
     </modal>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: 'Login',
     data() {
@@ -26,27 +27,29 @@ export default {
             showModal: false
         }
     },
-    methods: {        
+    methods: {
+        ...mapActions([
+            'loginRequest'
+        ]),
         validate() {
             return this.username.length > 0 && this.password.length > 0
         },
         async submit() {
             if (this.validate()) {
-                
-                try {            
-                    await this.$store.dispatch('loginRequest', { username: this.username, password: this.password })
-                    if (this.$route.path !== '/')                    
+                try {
+                    await this.loginRequest({ username: this.username, password: this.password })
+                    if (this.$route.path !== '/')
                         this.$router.push('/');
-                } catch(msg) {                    
+                } catch(msg) {
                     console.error('error', msg);
                 }
-            }            
+            }
         },
         toggleModal() {
             this.showModal = !this.showModal
         }
     },
-    mounted(){        
+    mounted(){
         this.toggleModal()
     },
     beforeRouteLeave (to, from, next) {
@@ -55,7 +58,7 @@ export default {
       // be navigated away from.
       // has access to `this` component instance.
       next()
-    }    
+    }
 }
 </script>
 <style scoped>
@@ -96,7 +99,7 @@ export default {
         cursor: pointer;
         border: 0;
         box-shadow: 0px 0px 15px -10px #000;
-        padding: 1rem 2rem; 
+        padding: 1rem 2rem;
         margin-top: 2rem;
     }
 </style>
