@@ -1,8 +1,7 @@
-// const root = 'https://my-json-server.typicode.com/anurupr/robustest-frontend-assignment'
 const root = 'http://localhost:3000'
 
 export default {
-    defParams: {    
+    defParams: {
         headers: {
             'Content-Type': 'application/json'
         }
@@ -11,11 +10,16 @@ export default {
     req(uri, params) {
         if (typeof params === 'undefined')
             params = {}
-        return fetch(root + uri, params);
-    },    
+        return fetch(root + uri, params).then(response => {
+            if(!response.ok) {
+                throw Error(response.errorText)
+            }
+            return response
+        });
+    },
 
     jsonResponse:(response) => response.json(),
-    
+
     buildParams(method, body) {
         if (typeof body === 'undefined')
             body = {}
@@ -25,10 +29,10 @@ export default {
     buildPostParams(body) {
         return this.buildParams("POST", body);
     },
-    
+
     buildDeleteParams(body) {
         return this.buildParams("DELETE", body);
-    },    
+    },
     buildPatchParams(body) {
         return this.buildParams("PATCH", body);
     },

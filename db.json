@@ -49,6 +49,19 @@
       },
       "timestamp": 1600441171,
       "id": 4
+    },
+    {
+      "content": "this is a new post",
+      "user": {
+        "id": 1,
+        "username": "rtester",
+        "name": "Robus Tester",
+        "email": "robustester@gmail.com",
+        "location": "Bangalore, India",
+        "gravatar": "https://www.gravatar.com/avatar/989cd7f6ad61d148c9a25251f048daf3?d=retro&r=PG"
+      },
+      "timestamp": 1600468104,
+      "id": 5
     }
   ],
   "comments": [
@@ -63,7 +76,7 @@
       },
       "content": "this is a comment",
       "timestamp": 1596999999,
-      "postId": 2
+      "postId": 3
     },
     {
       "content": "yest",
@@ -92,6 +105,20 @@
       "timestamp": 1600354261,
       "postId": 1,
       "id": 7
+    },
+    {
+      "content": "this is a new comment",
+      "user": {
+        "id": 1,
+        "username": "rtester",
+        "name": "Robus Tester",
+        "email": "robustester@gmail.com",
+        "location": "Bangalore, India",
+        "gravatar": "https://www.gravatar.com/avatar/989cd7f6ad61d148c9a25251f048daf3?d=retro&r=PG"
+      },
+      "timestamp": 1600468109,
+      "postId": 5,
+      "id": 8
     }
   ],
   "profile": {
