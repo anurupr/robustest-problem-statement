@@ -1,6 +1,6 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 
-import NotFound from '@/components/Common/Navigation/NotFound'
+import NotFound from '@/views/NotFound'
 import Column from '@/components/Common/Layout/Column'
 import Row from '@/components/Common/Layout/Row'
 
@@ -13,10 +13,10 @@ const factory = (opts = {}) => {
 
 
 describe('NotFound', () => {
-    it('renders Not Found page', () => {   
+    it('renders Not Found page', () => {
         const wrapper = factory({
             localVue
-        });    
+        });
         expect(wrapper.find('p').text()).toBe("Sorry, page doesn't exist")
     })
 })
