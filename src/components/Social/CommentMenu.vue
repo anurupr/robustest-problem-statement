@@ -64,6 +64,7 @@ export default {
         top: 0;
         right: 0;
         margin: 0;
+        cursor: pointer;
     }
     .menuitem a > span,
     .dropdown /deep/ a > span {
@@ -85,6 +86,7 @@ export default {
 
     .dropdown ul {
         text-align: left;
+        padding: 0;
     }
 
     .dropdown li {

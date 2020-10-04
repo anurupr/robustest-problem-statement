@@ -1,7 +1,8 @@
 <!-- Layout Header -->
 <template>
-    <header>        
-            <Column class="logo column__ct_6 column__xs__ct_8">
+    <!-- app prop ensures the v-app-bar uses the correct amount of space and keeps the layour proper -->
+    <v-app-bar app elevation="0">
+        <Column class="logo column__ct_6 column__xs__ct_8">
                 <div style="margin-right: auto; display: flex;">                
                     <img src="@/assets/logo.png" />
                     <span>feed.</span>
@@ -11,8 +12,8 @@
                 <div style="margin-left: auto">
                     <Menu />
                 </div>
-            </Column>        
-    </header>
+            </Column>
+    </v-app-bar>
 </template>
 <script>
 import Menu from '@/components/Common/Navigation/Menu.vue'

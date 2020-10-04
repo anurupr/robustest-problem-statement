@@ -1,27 +1,41 @@
 <!-- Home View -->
 <template>
-  <container>      
-      <row>
+  <v-main>
+    <v-container fluid>
+      <v-row>
           <!-- Profile -->
-          <column class="profile-container column__ct_3 column__xs__ct_12 column__sm__ct_12 column__md__ct_12" :class="{ empty: !isLoggedIn }" >
+          <v-col
+            xl="3"
+            lg="3"
+            md="12"
+            sm="12"
+            cols="12"
+            :class="{ empty: !isLoggedIn }" >
             <template v-if="isLoggedIn">
               <Profile />
             </template>            
-          </column>
+          </v-col>
           <!-- News Feed -->
-          <column class="main column__ct_6 column__xs__ct_12 column__sm__ct_12 column__md__ct_12" :class="{ empty: posts.length === 0 }">
-            <template v-if="isLoggedIn">
+          <v-col
+            cols="12" 
+            sm="12"
+            md="12"
+            lg="6"
+            xl="6"
+            :class="{ empty: posts.length === 0 }">
+            <!-- <template v-if="isLoggedIn">
               <router-link to="/create-post" class='btn primary' exact>New Post</router-link>
-            </template>          
+            </template>           -->
             <router-view name="create-post" key='create-post' ></router-view>
             <router-view name="edit-post" key='edit-post' ></router-view>
             <router-view name="delete-post" key='delete-post' ></router-view>
             <router-view name="edit-comment" key='edit-comment' ></router-view>
             <router-view name="delete-comment" key='edit-comment' ></router-view>
             <NewsFeed />
-          </column>
-      </row>
-  </container>
+          </v-col>
+      </v-row>
+    </v-container>
+  </v-main>    
 </template>
 
 <script>
@@ -43,16 +57,4 @@ export default {
     }
 }
 </script>
-<style scoped>
-
-  .main {
-    flex-direction: column;    
-  }
-
-  /* this ensures page layout is proper even when content hasn't loaded yet */
-  .main,
-  .profile-container {
-    min-width: 30%;
-  }
-</style>
 

@@ -1,8 +1,12 @@
 <template> 
     <transition name="fade">
-        <div class="modal" v-show="show" :style="{width: width +'px', height: height +'px'}" @click.self="closeModal">
+        <v-dialog
+            v-model="show"
+            fullscreen           
+            transition="dialog-bottom-transition"
+         class="modal" v-show="show" :style="{width: width +'px', height: height +'px'}" @click.self="closeModal">
             <slot></slot>
-        </div>
+        </v-dialog>
     </transition>
 </template>
 <script>
@@ -17,7 +21,7 @@ export default {
     data() {
         return {            
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight           
         }
     },
     methods: {

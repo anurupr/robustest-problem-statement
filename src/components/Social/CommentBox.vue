@@ -1,6 +1,8 @@
 <template>
     <text-box :pholder="pholder" v-model="content">
-        <button class="submit" v-on:click="add">Comment</button>
+        <v-btn color="primary" raised elevation="1" fab v-on:click="add"><v-icon dark>
+        fa-comment
+      </v-icon></v-btn>
     </text-box>
 </template>
 <script>
@@ -69,7 +71,7 @@ export default {
     /* background: #33a2ff; */
     background: #65afec;
     color: white;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 15px;
     font-weight: bolder;
     cursor: pointer;        

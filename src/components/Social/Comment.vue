@@ -1,19 +1,21 @@
 <template>
-    <div class="box nf-item comment" >
-        <row>
-            <column class="column__ct_1 column__xs__ct_2 avatar">
-                <img :src="gravatar">
-            </column>
-            <column class="column__ct_10 column__xs__ct_9 ">
-                <column class="column__ct_12 content meta">
-                    <column class="column__ct_12 meta">
+    <v-sheet class="nf-item comment" >
+        <v-row>
+            <v-col cols="1">
+                <v-avatar size="50px">
+                    <v-img :src="gravatar"></v-img>
+                </v-avatar>
+            </v-col>
+            <v-col cols="9" sm="11">
+                <v-col class="content pt-0">
+                    <v-col class="d-flex flex-column">
                         <span class="field username">{{ username }}</span>
                         <span class="field time">{{ timestamp }}</span>
                         <template v-if="!editable && isLoggedIn && userId == currentUserId">
                             <CommentMenu :postId="postId" :commentId="commentId" />
                         </template>
-                    </column>                
-                    <column class="column__ct_12 meta">
+                    </v-col>                
+                    <v-col class="meta pb-0">
                         <template v-if="editable">
                             <input type="text" v-model="content">
                             <button class="btn primary" v-on:click="save">Save</button>
@@ -21,12 +23,11 @@
                         <template v-else>
                             <p>{{ content }}</p>
                         </template>
-                    </column>                                     
-                </column>
-            </column>
-        </row>
-        
-    </div>
+                    </v-col>
+                </v-col>
+            </v-col>
+        </v-row>        
+    </v-sheet>
 </template>
 <script>
 import CommentMenu from '@/components/Social/CommentMenu'
@@ -110,7 +111,8 @@ export default {
         box-shadow: none;
         float: left;
         width: 100%;
-        padding: 1rem;
+        /* padding: 1rem; */
+        padding: 0;
     } 
 
     .nf-item.comment .content {
@@ -157,6 +159,11 @@ export default {
     }
 
     .nf-item .time {
+        /* font-size: 1.2rem; */
+        color: #666;
+    }
+
+    .nf-item.comment p {
         font-size: 1.2rem;
     }
 

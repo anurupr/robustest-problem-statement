@@ -13,6 +13,11 @@ import Row from '@/components/Common/Layout/Row'
 import Popup from '@/components/Common/Interface/Popup'
 import TextBox from '@/components/Common/Input/TextBox'
 
+import vuetify from './plugins/vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import 'font-awesome/css/font-awesome.css'
+
 // Registering global components
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
@@ -38,5 +43,6 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
   store,
+  vuetify,
   router
 }).$mount('#app')

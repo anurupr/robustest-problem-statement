@@ -1,34 +1,38 @@
 <template>
-    <div class="box nf-item post">
-        <row>
-            <column class="column__ct_1  column__xs__ct_2 avatar">
-                <img :src="gravatar">
-            </column>
-            <column class="column__ct_10  column__xs__ct_9 meta">
+    <v-card class="nf-item post">
+        <v-row>
+            <v-col
+                cols="1"
+            >
+                <v-avatar size="60px">
+                    <v-img :src="gravatar"></v-img>
+                </v-avatar>
+            </v-col>
+            <v-col cols="11" sm="10" md="10" lg="10" class="meta">
                 <span class="field username">{{ username }}</span>
                 <span class="field time">{{ timestamp }}</span>
                 <template v-if="!editable && isLoggedIn && userId == currentUserId">    
                     <PostMenu :postId="postId" />
                 </template>
-            </column>
-        </row>
-        <row>
-            <column class="column__ct_12 meta">
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="12" class="meta mx-auto">
                 <template v-if="editable">
                     <input type="text" v-model="content">
-                    <button class="btn primary" v-on:click="save">Save</button>
+                    <v-btn color="primary" v-on:click="save">Save</v-btn>
                 </template>
                 <template v-else>
                     <p>{{ content }}</p>
                 </template>                
-            </column>
-        </row>
+            </v-col>
+        </v-row>
         <template v-if="isLoggedIn && !editable">
-            <row>
-                <column class="column__ct_12 commentbox__container">
+            <v-row>
+                <v-col cols="12" class="commentbox__container">
                     <CommentBox :postId="postId" />
-                </column>
-            </row>            
+                </v-col>
+            </v-row>            
         </template>
         <template v-if="comments.length > 0 && !editable">
             <hr class="separator" />            
@@ -38,7 +42,7 @@
                 </column>
             </row>
         </template>
-    </div>
+    </v-card>
 </template>
 <script>
 import { fromAgo } from '@/utils'
@@ -134,6 +138,7 @@ export default {
 <style scoped> 
     .nf-item {
         position: relative;
+        padding: 0rem 1rem;
     }
 
     .nf-item:not(:first-child):not(:last-child) {
@@ -157,16 +162,21 @@ export default {
         margin-top: 0.25rem;
     }
 
-   .nf-item p,
+   
    .nf-item /deep/ p {        
         white-space: pre-wrap; /* in case user edits post / comment, this ensures that any line breaks are visible */
-        font-family: 'Segoe UI Historic', 'Segoe UI', Helvetica, Arial, sans-serif;
-        font-size: 1.5rem;
+        /* font-family: 'Segoe UI Historic', 'Segoe UI', Helvetica, Arial, sans-serif; */
+        
        
         /* this makes sure text is justified with proper spacing */
         text-align: justify;
         text-justify: distribute;
-        text-align-last: left;        
+        text-align-last: left;     
+        /* padding: 0px 12px; */
+    }
+
+    .nf-item p {
+        font-size: 1.3rem;
     }
 
     .nf-item img {
@@ -192,12 +202,10 @@ export default {
         text-align: left;
     }    
 
-    .nf-item .row {
-        display: flex;
-    }
 
     .nf-item .time {
-        font-size: 1.2rem;
+        /* font-size: 1.2rem; */
+        color: grey;
     }
 
     .nf-item .username {
@@ -209,14 +217,10 @@ export default {
         right: 0;
     }
 
-    .commentbox__container,
-    .comment__container {
-        padding: 0;
-    }
-
     .meta {
         flex-direction: column;
         align-items: flex-start;
+        display: flex;
     }
 
     .avatar {

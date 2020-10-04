@@ -1,7 +1,6 @@
 <template>
-  <div id="app" :class="{ hoverflow: isModalVisible }">    
-    <Header /> 
-    
+  <v-app id="app" :class="{ hoverflow: isModalVisible }">    
+    <Header />     
     <ActivityIndicator v-show="isLoading" />
     
     <div class="notifs-container">
@@ -9,7 +8,7 @@
     </div>
     <router-view></router-view>    
     <Footer />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -17,6 +16,7 @@ import { mapState } from 'vuex'
 import ActivityIndicator from '@/components/Common/Interface/ActivityIndicator'
 import Header from '@/components/Common/Layout/Header'
 import Footer from '@/components/Common/Layout/Footer'
+
 
 export default {
   name: 'App',
@@ -44,5 +44,9 @@ export default {
 
   .hoverflow {
     overflow: hidden;
+  }
+
+  #app {
+    background: transparent;
   }
 </style>
