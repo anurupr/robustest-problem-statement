@@ -1,13 +1,16 @@
 <template>
-    <v-sheet class="text__box">
+    <v-card elevation="0" class="text__box">
         <v-row>
-            <v-col cols="1">
-                <v-avatar size="50px">
+            <v-col cols="2"
+                lg="1"
+                md="1">
+                <v-avatar>
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="11" class="d-flex flex-row">
-                <v-col cols="10" sm="11" class="textbox__container">
+            <v-col cols="9" sm="9" md="11" lg="11" class="d-flex flex-row">
+                <!-- Remove padding when in mobile mode --- gives more space for elements -->
+                <v-col cols="9" lg="11"  class="textbox__container" :class="{'pa-0': $vuetify.breakpoint.mobile }">
                     <!-- recommended method of using v-model with custom components -->
                     <!-- when we declare the component we use <component v-model="varname" /> -->
                     <!-- internally this is how it is handled -->
@@ -15,11 +18,13 @@
                     <textarea v-bind:value="value" :placeholder="pholder" v-on:input="$emit('input', $event.target.value)" ></textarea>
                 </v-col>
                 <v-col cols="2" sm="1" class="submit__container">
-                    <slot></slot>
+                    <v-card-actions>
+                        <slot></slot>
+                    </v-card-actions>
                 </v-col>
             </v-col>
         </v-row>
-    </v-sheet>
+    </v-card>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -97,6 +102,8 @@ export default {
         padding: 0rem 1rem 0rem 0rem;
         display: flex;
         flex-grow: 11;
+        justify-content: center;
+        align-items: center;
         
     }
 

@@ -3,7 +3,7 @@
         <!-- https://github.com/vuetifyjs/vuetify/issues/8555 -->
         <!-- v-avatar under v-card loses border-radius -->
         <v-col
-            cols="3"
+            cols="12"
             sm="12"
             md="12"
         >

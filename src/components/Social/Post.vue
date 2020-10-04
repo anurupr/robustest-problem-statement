@@ -2,13 +2,15 @@
     <v-card class="nf-item post">
         <v-row>
             <v-col
-                cols="1"
+                cols="3"
+                lg="1"
+                md="1"
             >
                 <v-avatar size="60px">
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="11" sm="10" md="10" lg="10" class="meta">
+            <v-col cols="9" sm="9" md="11" lg="11" class="meta">
                 <span class="field username">{{ username }}</span>
                 <span class="field time">{{ timestamp }}</span>
                 <template v-if="!editable && isLoggedIn && userId == currentUserId">    
@@ -29,18 +31,19 @@
         </v-row>
         <template v-if="isLoggedIn && !editable">
             <v-row>
-                <v-col cols="12" class="commentbox__container">
+                <!-- Remove padding when in mobile mode --- gives more space for elements -->
+                <v-col cols="12" class="commentbox__container" :class="{'pa-0': $vuetify.breakpoint.mobile }">
                     <CommentBox :postId="postId" />
                 </v-col>
             </v-row>            
         </template>
         <template v-if="comments.length > 0 && !editable">
             <hr class="separator" />            
-            <row>
-                <column class="column__ct_12 comment__container meta">
+            <v-row>
+                <v-col cols="12" class="comment__container meta">
                     <Comment v-for="comment in comments" :key="'comment-' + comment.id" :comment="comment" :post="post"></Comment>
-                </column>
-            </row>
+                </v-col>
+            </v-row>
         </template>
     </v-card>
 </template>

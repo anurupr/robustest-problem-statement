@@ -1,14 +1,16 @@
 <template>
-    <v-sheet class="nf-item comment" >
+    <v-card elevation="0" class="nf-item comment align-start">
         <v-row>
-            <v-col cols="1">
+            <v-col cols="3"
+                lg="1"
+                md="1">
                 <v-avatar size="50px">
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="9" sm="11">
+            <v-col cols="9" sm="9" md="11" lg="11">
                 <v-col class="content pt-0">
-                    <v-col class="d-flex flex-column">
+                    <v-col class="d-flex flex-column align-start">
                         <span class="field username">{{ username }}</span>
                         <span class="field time">{{ timestamp }}</span>
                         <template v-if="!editable && isLoggedIn && userId == currentUserId">
@@ -18,7 +20,11 @@
                     <v-col class="meta pb-0">
                         <template v-if="editable">
                             <input type="text" v-model="content">
-                            <button class="btn primary" v-on:click="save">Save</button>
+                            <v-card-actions>
+                                <v-btn color="primary" raised elevation="1" fab v-on:click="add">
+                                    <v-icon dark>fa-save</v-icon>
+                                </v-btn>
+                            </v-card-actions>
                         </template>
                         <template v-else>
                             <p>{{ content }}</p>
@@ -27,7 +33,7 @@
                 </v-col>
             </v-col>
         </v-row>        
-    </v-sheet>
+    </v-card>
 </template>
 <script>
 import CommentMenu from '@/components/Social/CommentMenu'
