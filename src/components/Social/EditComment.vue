@@ -1,6 +1,6 @@
 <template>
  <modal v-model="show" title="Edit Comment">
-     <template v-if="post != null">
+     <template v-if="post != null && comment != null">
         <Comment :post="post" :comment="comment" :editable="true" :modal="true" />
      </template>
  </modal>
@@ -20,15 +20,11 @@ export default {
             show: false
         }
     },
-    computed: {
-        ...mapGetters([
-            'getPost',
-            'getComment'
-        ])
-    },
     methods: {
         ...mapActions([            
-            'modalVisible'
+            'modalVisible',
+            'getPost',
+            'getComment'
         ]),
         showModal() {
             this.show = true
@@ -39,10 +35,15 @@ export default {
             this.modalVisible(this.show)
         }
     },
-    mounted() {
-        this.post = this.getPost(this.$route.params.postId)
-        this.comment = this.getComment(this.post.id, this.$route.params.id)
-        this.showModal()        
+    async mounted() {
+        // get post and comment from api
+        this.post = await this.getPost(this.$route.params.postId)
+        console.log('this.post', this.post)        
+        this.comment = await this.getComment(this.$route.params.id)
+        console.log('this.comment', this.comment)
+        // show modal only if post and comment is retrieved
+        if (this.post != null && this.comment != null)
+            this.showModal()        
     },
     beforeRouteLeave (to, from, next) {
       this.hideModal()

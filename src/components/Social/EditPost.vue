@@ -7,7 +7,7 @@
 </template>
 <script>
 import Post from '@/components/Social/Post'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
     name: 'EditPost', 
     components: {
@@ -20,14 +20,15 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'getPost'
+        ...mapState([
+            'isLoading'
         ])
     },
     methods: {
         // array notation is used when the name and mapping are the same
         ...mapActions([
-            'modalVisible'
+            'modalVisible',
+            'getPost'
         ]),
         showModal() {
             this.show = true
@@ -38,9 +39,15 @@ export default {
             this.modalVisible(this.show)
         }
     },
-    mounted() {
-        this.post = this.getPost(this.$route.params.id)
-        this.showModal()        
+    async mounted() {        
+        // get post using api is more preferred
+        // if we get post from state , it will work only when the parent component is loaded first
+        // this is also best practice
+        this.post = await this.getPost(this.$route.params.id)        
+        // show modal only if post is loaded
+        // error handling is done in action
+        if (this.post != null)
+            this.showModal()      
     },
     beforeRouteLeave (to, from, next) {
       this.hideModal()

@@ -22,6 +22,9 @@ export default {
     getComments(postId) {
         return api.req(`/posts/${postId}/comments`).then(api.jsonResponse)
     },
+    getComment(commentId) {
+        return api.req(`/comments/${commentId}`).then(api.jsonResponse)
+    },
     createComment(comment) {
         return api.req(`/comments`, api.buildPostParams(comment)).then(api.jsonResponse)
     },

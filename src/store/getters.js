@@ -13,7 +13,8 @@ export default {
             gravatar: utils.cgravatar('robustester@gmail.com')
         };
     },    
-    getPost: (state) => (id) => {                
+    getPost: (state) => (id) => {
+        console.log('state.posts', state.posts)                
         return state.posts.find(p => p.id ==id)
     },
     getPostIndex: (state) => (postId) => {

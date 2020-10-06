@@ -97,6 +97,36 @@ export default {
         }
         commit('NOTIFICATION_ADD', notif)
     },
+    async getPost({ dispatch }, postId) {
+        let post = null
+        try {
+            post = await Posts.getPost(postId)
+            dispatch('resetLoading')
+        } catch (error) {
+            dispatch('resetLoading')
+            dispatch('addNotif', { 
+                type: "error",
+                message: "Error getting post"
+            })
+        }
+        return post
+    },
+    async getComment({ dispatch }, commentId) {
+        let comment = null
+        try {
+            comment = await Posts.getComment(commentId)
+            console.log('comment', comment)
+            dispatch('resetLoading')
+        } catch (error) {
+            dispatch('resetLoading')
+            dispatch('addNotif', { 
+                type: "error",
+                message: "Error getting comment"
+            })
+            console.error('error', error)
+        }
+        return comment
+    },
     addSuccessNotif({ dispatch }, { message }) {
        dispatch('addNotif', { type: "success", message })  
     },
