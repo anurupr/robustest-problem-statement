@@ -1,29 +1,31 @@
 <template>
-    <ul class="menu floating">
-        <li class="menuitem">
-            <!-- @click.self ensures that handler is called when clicking on this element only -->
-            <span
-            class="dot"
-            @click.self="toggleDropdown"
-            >
-                <div :class="{ isOpen }" class="dropdown">
-                    <ul>
-                        <li >
-                          <!-- @click.native is required to handle on click of router link -->
-                          <router-link :to='{ name: "edit-post", params: { id: postId } }' class="edit" @click.native="toggleDropdown">
-                               <font-awesome-icon icon="edit" />Edit
-                         </router-link>
-                        </li>
-                        <li>
-                          <router-link :to='{ name: "delete-post", params: { id: postId } }' class="delete"  @click.native="toggleDropdown">
-                               <font-awesome-icon icon="trash" />Delete
-                         </router-link>
-                        </li>
-                    </ul>
-                </div>
-            </span>
-        </li>
-    </ul>
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          text          
+          v-bind="attrs"
+          v-on="on"
+          fab
+        >
+          <v-icon>fa-ellipsis-v</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <!-- v-list-item extends router link properties , so it can use the same attributes -->
+        <v-list-item :key="'edit-comment' + postId" link :to='{ name: "edit-post", params: { id: postId } }'>            
+            <v-list-item-icon>
+              <v-icon >fa-edit</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Edit</v-list-item-title>            
+        </v-list-item>
+        <v-list-item :key="'delete-comment' + postId" link :to='{ name: "delete-post", params: { id: postId } }'>
+            <v-list-item-icon>
+              <v-icon>fa-trash</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Delete</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 </template>
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -36,74 +38,6 @@ export default {
             type: Number,
             required: true
         }
-    },
-    data() {
-        return {
-            isOpen: false
-        }
-    },
-    methods: {
-        toggleDropdown() {
-            this.isOpen = !this.isOpen;
-        }
     }
 }
 </script>
-<style scoped>
- ul.menu.floating {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        cursor: pointer;
-    }
-    .menuitem a > span,
-    .dropdown /deep/ a > span {
-        display: inline-block;
-        text-indent: 5px;
-    }
-    
-    .menuitem > .dot:after {
-        content: '\2807';
-        font-size: 25px;
-        padding-left: 8px;
-    } 
-
-    .menuitem > .hamburger:after {
-        content: '\2261';
-        font-size: 25px;
-        padding-left: 8px;
-    }
-
-    .dropdown ul {
-        text-align: left;
-        padding: 0;
-    }
-
-    .dropdown li {
-        padding: .25em;
-    }
-
-    .dropdown {
-        position: absolute;
-        left: 50%;
-        transform: translatex(-50%) rotatex(90deg) scale(0);
-        margin-top: 0.55em;
-        transform-origin: 0 0;
-        border-radius: 0.35em;
-        background-color: #f5f5f5;
-        visibility: hidden;
-        opacity: 0;
-        transition: all 200ms linear;
-        z-index: 9999;
-        box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.2);
-        min-width: 5em;
-        top: 1em;
-    }
-
-    .dropdown.isOpen {
-        transform: translatex(-50%);
-        visibility: visible;
-        opacity: 1;
-    }
-</style>

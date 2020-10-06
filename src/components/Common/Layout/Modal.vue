@@ -1,10 +1,28 @@
 <template> 
     <transition name="fade">
-        <v-dialog
-            v-model="show"
-            fullscreen           
-            transition="dialog-bottom-transition"
-         class="modal" v-show="show" :style="{width: width +'px', height: height +'px'}" @click.self="closeModal">
+        <v-dialog 
+            :value="value" @input="$emit('input')"  
+            :fullscreen="$vuetify.breakpoint.mobile"               
+            transition="dialog-bottom-transition"            
+            @click:outside="closeModal"
+            eager
+            :width="autoWidth ? 'auto' : 'unset'"
+            >
+            <template v-if="showToolBar">
+                <v-toolbar
+                dark
+                color="primary"
+                >
+                    <v-btn
+                        icon
+                        dark
+                        @click="closeModal"
+                    >
+                        <v-icon>fa-window-close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>{{ title }}</v-toolbar-title>                                
+                </v-toolbar>
+            </template>
             <slot></slot>
         </v-dialog>
     </transition>
@@ -13,15 +31,20 @@
 export default {
     name: 'Modal',
     props: {
-        show: {
+        value: {
             type: Boolean,
             default: false
-        }
-    },
-    data() {
-        return {            
-            width: window.innerWidth,
-            height: window.innerHeight           
+        },
+        title: {
+            type: String,
+        },
+        showToolBar: {
+            type: Boolean,
+            default: true
+        },
+        autoWidth: {
+            type: Boolean,
+            default: true
         }
     },
     methods: {
@@ -33,15 +56,9 @@ export default {
 }
 </script>
 <style scoped>
-    .modal {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        margin: 0 auto;
-        background: rgba(0,0,0,0.4);
-        z-index: 99999;
-        padding: 2rem;
+    .unset-width{ 
+        width: unset;
     }
+
+
 </style>

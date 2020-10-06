@@ -1,6 +1,6 @@
 <template>
     <v-card class="nf-item post">
-        <v-row>
+        <v-row class="m-width-100">
             <v-col
                 cols="3"
                 lg="1"
@@ -10,29 +10,30 @@
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="9" sm="9" md="11" lg="11" class="meta">
-                <span class="field username">{{ username }}</span>
-                <span class="field time">{{ timestamp }}</span>
-                <template v-if="!editable && isLoggedIn && userId == currentUserId">    
-                    <PostMenu :postId="postId" />
-                </template>
+            <v-col cols="9" sm="9" md="11" lg="11" class="pl-6">
+                <v-col class="d-flex flex-column align-start py-1 px-0">
+                    <span class="field username">{{ username }}</span>
+                    <span class="field time">{{ timestamp }}</span>                    
+                </v-col>
             </v-col>
         </v-row>
-        <v-row>
-            <v-col cols="12" class="meta mx-auto">
+        <v-row class="m-width-100">
+            <v-col cols="11" :class="{ 'mx-auto': editable }">
                 <template v-if="editable">
-                    <input type="text" v-model="content">
-                    <v-btn color="primary" v-on:click="save">Save</v-btn>
+                    <input type="text" v-model="content">                    
+                    <v-card-actions>
+                        <v-btn color="primary" v-on:click="save">Save</v-btn>                                
+                    </v-card-actions>
                 </template>
                 <template v-else>
-                    <p>{{ content }}</p>
+                    <p class="my-0">{{ content }}</p>
                 </template>                
             </v-col>
         </v-row>
         <template v-if="isLoggedIn && !editable">
             <v-row>
-                <!-- Remove padding when in mobile mode --- gives more space for elements -->
-                <v-col cols="12" class="commentbox__container" :class="{'pa-0': $vuetify.breakpoint.mobile }">
+                <!-- Remove padding when in mobile mode and only top padding in regular  --- gives more space for elements -->
+                <v-col cols="12" class="commentbox__container pt-0" :class="{'pa-0': $vuetify.breakpoint.mobile }">
                     <CommentBox :postId="postId" />
                 </v-col>
             </v-row>            
@@ -40,10 +41,15 @@
         <template v-if="comments.length > 0 && !editable">
             <hr class="separator" />            
             <v-row>
-                <v-col cols="12" class="comment__container meta">
+                <v-col cols="12" class="comment__container">
                     <Comment v-for="comment in comments" :key="'comment-' + comment.id" :comment="comment" :post="post"></Comment>
                 </v-col>
             </v-row>
+        </template>
+        <template v-if="!editable && isLoggedIn && userId == currentUserId">
+            <v-card-actions class="nf-item-float-menu">
+                <PostMenu :postId="postId" />
+            </v-card-actions>
         </template>
     </v-card>
 </template>
@@ -82,6 +88,7 @@ export default {
         save: function() {           
             // get content from element and save it in            
             this.updatePost(this.post)
+            console.log('this.$route.path', this.$route.path)
             if (this.$route.path !== '/')
                 this.$router.push('/')
         }
@@ -138,11 +145,20 @@ export default {
       } 
 }
 </script>
+<style>
+    /* to give the post menu an absolute position on the top right . instead of the regular position . looks much better */
+    .nf-item-float-menu {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+</style>
 <style scoped> 
     .nf-item {
         position: relative;
         padding: 0rem 1rem;
     }
+    
 
     .nf-item:not(:first-child):not(:last-child) {
         border-bottom-left-radius: 0;
@@ -179,7 +195,7 @@ export default {
     }
 
     .nf-item p {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .nf-item img {
@@ -236,6 +252,10 @@ export default {
         width: 100%;
         min-height: 40px;
         margin: 1rem auto;
+    }
+
+    .m-width-100 {
+        max-width: 100%;
     }
 
     

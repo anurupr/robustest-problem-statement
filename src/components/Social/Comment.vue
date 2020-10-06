@@ -1,6 +1,6 @@
 <template>
     <v-card elevation="0" class="nf-item comment align-start">
-        <v-row>
+        <v-row class="m-width-100">
             <v-col cols="3"
                 lg="1"
                 md="1">
@@ -10,29 +10,29 @@
             </v-col>
             <v-col cols="9" sm="9" md="11" lg="11">
                 <v-col class="content pt-0">
-                    <v-col class="d-flex flex-column align-start">
+                    <v-col class="d-flex flex-column align-start py-1 px-0">
                         <span class="field username">{{ username }}</span>
                         <span class="field time">{{ timestamp }}</span>
-                        <template v-if="!editable && isLoggedIn && userId == currentUserId">
-                            <CommentMenu :postId="postId" :commentId="commentId" />
-                        </template>
                     </v-col>                
-                    <v-col class="meta pb-0">
+                    <v-col class="pa-0 pt-2">
                         <template v-if="editable">
                             <input type="text" v-model="content">
-                            <v-card-actions>
-                                <v-btn color="primary" raised elevation="1" fab v-on:click="add">
-                                    <v-icon dark>fa-save</v-icon>
-                                </v-btn>
+                            <v-card-actions class="pa-0">
+                                <v-btn color="primary" v-on:click="save">Save</v-btn>                                
                             </v-card-actions>
                         </template>
                         <template v-else>
-                            <p>{{ content }}</p>
+                            <p class="mb-0">{{ content }}</p>
                         </template>
                     </v-col>
                 </v-col>
             </v-col>
-        </v-row>        
+        </v-row>
+        <template v-if="!editable && isLoggedIn && userId == currentUserId">
+            <v-card-actions class="nf-item-float-menu">
+                <CommentMenu :postId="postId" :commentId="commentId" />
+            </v-card-actions>
+        </template>        
     </v-card>
 </template>
 <script>
@@ -165,12 +165,16 @@ export default {
     }
 
     .nf-item .time {
-        /* font-size: 1.2rem; */
+        font-size: 0.9rem;
         color: #666;
     }
 
     .nf-item.comment p {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+    }
+
+    .m-width-100 {
+        max-width: 100%;
     }
 
 </style>

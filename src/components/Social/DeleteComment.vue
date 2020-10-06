@@ -1,14 +1,12 @@
 <template>
-    <modal :show="showModal">
-        <row>
-            <column class="column__ct_12 centered">
-                <div class="box">
-                    <p>Are you sure you want to delete this comment?</p>
-                    <input class="btn secondary" type="button" @click="cancel" value="Cancel" />
-                    <input class="btn primary" type="button" @click="proceed" value="Proceed" />
-                </div>
-            </column>
-        </row>
+    <modal v-model="show" :showToolBar="false" :autoWidth="$vuetify.breakpoint.mobile">
+        <v-card class="pa-5">
+            <p>Are you sure you want to delete this comment?</p>
+            <v-card-actions class="justify-center">
+                <v-btn color="secondary" @click="cancel">Cancel</v-btn>
+                <v-btn color="primary" @click="proceed">Proceed</v-btn>
+            </v-card-actions>
+        </v-card>        
     </modal>   
 </template>
 <script>
@@ -17,7 +15,7 @@ export default {
     name: 'DeletePost',
     data() {
         return { 
-            showModal: false
+            show: false
         }
     },    
     methods: {
@@ -38,16 +36,20 @@ export default {
             if (this.$route.path !== '/')
                 this.$router.replace('/')
         },
-        toggleModal() {
-            this.showModal = !this.showModal
-            this.modalVisible(this.showModal)
+        showModal() {
+            this.show = true
+            this.modalVisible(this.show)
+        },
+        hideModal() {
+            this.show = false
+            this.modalVisible(this.show)
         }
     },        
     mounted(){        
-        this.toggleModal()        
+        this.showModal()        
     },
     beforeRouteLeave (to, from, next) {
-      this.toggleModal()
+      this.hideModal()
       // called when the route that renders this component is about to
       // be navigated away from.
       // has access to `this` component instance.

@@ -1,10 +1,10 @@
 <template>
-    <modal :show="showModal">
+    <modal v-model="show" title="New Post">
         <PostBox />
     </modal>
 </template>
-
 <script>
+import { mapActions } from 'vuex'
 import PostBox from "@/components/Social/PostBox"
 export default {
     name: 'CreatePost',
@@ -13,20 +13,27 @@ export default {
     },
     data() {
         return { 
-            showModal: false
+            show: false
         }
     },
-    methods: {
-        toggleModal() {
-            this.showModal = !this.showModal
-            this.$store.dispatch('modalVisible', this.showModal)
+    methods: { 
+        ...mapActions([
+            'modalVisible'
+        ]),       
+        showModal() {
+            this.show = true
+            this.modalVisible(this.show)
+        },
+        hideModal() {
+            this.show = false
+            this.modalVisible(this.show)
         }
     },
     mounted(){        
-        this.toggleModal()        
+        this.showModal()        
     },
     beforeRouteLeave (to, from, next) {
-      this.toggleModal()
+      this.hideModal()
       // called when the route that renders this component is about to
       // be navigated away from.
       // has access to `this` component instance.

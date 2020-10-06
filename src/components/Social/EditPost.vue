@@ -1,5 +1,5 @@
 <template>
- <modal :show="showModal">
+ <modal v-model="show" title="Edit Post">     
      <template v-if="post != null">
         <Post :post="post" :editable="true" />
      </template>
@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             post: null,
-            showModal: false
+            show: false
         }
     },
     computed: {
@@ -29,17 +29,21 @@ export default {
         ...mapActions([
             'modalVisible'
         ]),
-        toggleModal() {
-            this.showModal = !this.showModal
-            this.modalVisible(this.showModal)
+        showModal() {
+            this.show = true
+            this.modalVisible(this.show)
+        },
+        hideModal() {
+            this.show = false
+            this.modalVisible(this.show)
         }
     },
     mounted() {
         this.post = this.getPost(this.$route.params.id)
-        this.toggleModal()        
+        this.showModal()        
     },
     beforeRouteLeave (to, from, next) {
-      this.toggleModal()
+      this.hideModal()
       // called when the route that renders this component is about to
       // be navigated away from.
       // has access to `this` component instance.

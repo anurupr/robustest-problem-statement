@@ -2,7 +2,7 @@
 <template>
   <v-main>
     <v-container fluid>
-      <v-row>
+      <v-row width="100%">
           <!-- Profile -->
           <v-col
             xl="3"
@@ -10,8 +10,11 @@
             md="12"
             sm="12"
             cols="12"
-            :class="{ empty: !isLoggedIn }" >
-            <template v-if="isLoggedIn">
+            :class="{ empty: !isLoggedIn && !$vuetify.breakpoint.mobile }" >
+            <template v-if="isLoading">
+              <v-skeleton-loader min-width="200" min-height="300" type="card-avatar"></v-skeleton-loader>
+            </template>
+            <template v-if="isLoggedIn && !isLoading">
               <Profile />
             </template>            
           </v-col>
@@ -22,10 +25,10 @@
             md="12"
             lg="6"
             xl="6"
-            :class="{ empty: posts.length === 0 }">
-            <!-- <template v-if="isLoggedIn">
-              <router-link to="/create-post" class='btn primary' exact>New Post</router-link>
-            </template>           -->
+            >
+            <template v-if="isLoading">
+              <v-skeleton-loader min-width="300" min-height="400"  type="card"></v-skeleton-loader>
+            </template>            
             <router-view name="create-post" key='create-post' ></router-view>
             <router-view name="edit-post" key='edit-post' ></router-view>
             <router-view name="delete-post" key='delete-post' ></router-view>
@@ -51,6 +54,7 @@ export default {
     },
     computed: {
         ...mapState([
+            'isLoading',
             'isLoggedIn',
             'posts'
         ])

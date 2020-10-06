@@ -18,7 +18,7 @@
                     <textarea v-bind:value="value" :placeholder="pholder" v-on:input="$emit('input', $event.target.value)" ></textarea>
                 </v-col>
                 <v-col cols="2" sm="1" class="submit__container">
-                    <v-card-actions>
+                    <v-card-actions class="pa-0">
                         <slot></slot>
                     </v-card-actions>
                 </v-col>

@@ -1,8 +1,16 @@
 <template>
     <text-box :pholder="pholder" v-model="content">
-        <v-btn color="primary" raised elevation="1" fab v-on:click="add"><v-icon dark>
-        fa-comment
-      </v-icon></v-btn>
+        <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" raised elevation="1" fab v-bind="attrs"
+          v-on="on" v-on:click="add">
+                    <v-icon dark>
+                        fa-comment
+                    </v-icon>
+                </v-btn>
+            </template>
+            <span>Comment</span>
+        </v-tooltip>
     </text-box>
 </template>
 <script>

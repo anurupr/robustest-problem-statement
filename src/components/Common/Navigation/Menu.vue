@@ -1,19 +1,38 @@
 <!-- Navigation Menu -->
 <template>
-    <ul class="menu">
-        <li class="menu-item" v-if="isLoggedIn">
-            <router-link class="logout" :to='{ name: "Logout" }'>
-                <font-awesome-icon icon="sign-out-alt" />
-                <span>Logout</span>
-            </router-link>
-        </li>
-        <li class="menu-item" v-if="!isLoggedIn">
-            <router-link class="login" :to='{ name: "Login" }'>
-                <font-awesome-icon icon="sign-in-alt" />
-                <span>Login</span>
-            </router-link>
-        </li>
-    </ul>
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          text          
+          v-bind="attrs"
+          v-on="on"
+          fab
+        >
+          <v-icon>fa-bars</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <!-- v-list-item extends router link properties , so it can use the same attributes -->
+        <v-list-item key="create-post" link to="/create-post" v-if="isLoggedIn">
+            <v-list-item-icon>
+              <v-icon color="green" >fa-paper-plane</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>New Post</v-list-item-title>            
+        </v-list-item>        
+        <v-list-item key="logout" link :to='{ name: "Logout" }' v-if="isLoggedIn">
+            <v-list-item-icon>
+              <v-icon color="primary">fa-sign-out</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Logout</v-list-item-title>            
+        </v-list-item>
+        <v-list-item key="login" link :to='{ name: "Login" }' v-if="!isLoggedIn">
+            <v-list-item-icon>
+              <v-icon color="primary">fa-sign-in</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Login</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>    
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -29,76 +48,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-    .menu.horizontal > li {
-        display: inline;
-    }
-
-    ul.menu {
-        list-style-type: none;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-        text-align: left;
-        margin: 0;
-    }
-
-    ul.menu li {
-        position: relative;
-        margin: 0.25em;
-        text-align: center;
-    }
-
-    ul.menu li /deep/  a {
-        width: 100%;
-    }
-
-    li.menu-item.clickable > span {
-        cursor: pointer;
-    }
-
-    ul.menu li /deep/  a,
-    li.menu-item.clickable > span {
-       padding: .25rem;
-       border-radius: 5px;
-       display: inline-block;
-       text-decoration: none;
-       transition: all 200ms ease;
-       color: #444;
-    }
-
-    /* ul.menu li /deep/ a:hover {
-        background-color: #eee;
-    }
-    ul.menu li a.active {
-        background-color: rgba(33, 37, 41, 0.45);
-    }
-    ul.menu li /deep/ ul {
-        padding: .25rem;
-    }
-
-    ul.menu li ul li a {
-        background-color: transparent;
-    }
-
-    ul.menu.responsive {
-        display: none;
-    } */
-
-
-
-    li.menu-item a > span {
-        display: inline-block;
-        text-indent: 5px;
-    }
-
-    @media screen and (max-width: 576px) {
-        ul.menu.regular {
-            display: none;
-        }
-        ul.menu.responsive {
-            display: block;
-        }
-    }
-</style>
