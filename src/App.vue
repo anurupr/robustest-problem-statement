@@ -49,4 +49,8 @@ export default {
   #app {
     background: transparent;
   }
+
+  .v-application--wrap {
+    width: 100%;
+  }
 </style>
