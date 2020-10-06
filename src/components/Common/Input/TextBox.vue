@@ -10,7 +10,7 @@
             </v-col>
             <v-col cols="9" sm="9" md="11" lg="11" class="d-flex flex-row">
                 <!-- Remove padding when in mobile mode --- gives more space for elements -->
-                <v-col cols="9" lg="11"  class="textbox__container" :class="{'pa-0': $vuetify.breakpoint.mobile }">
+                <v-col cols="9" lg="11"  class="textbox__container" :class="{'pl-1': $vuetify.breakpoint.mobile}">
                     <!-- recommended method of using v-model with custom components -->
                     <!-- when we declare the component we use <component v-model="varname" /> -->
                     <!-- internally this is how it is handled -->

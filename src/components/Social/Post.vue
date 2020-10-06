@@ -1,10 +1,11 @@
 <template>
-    <v-card class="nf-item post">
-        <v-row class="m-width-100">
+    <v-card class="nf-item post" :class="{ 'pa-2': $vuetify.breakpoint.mobile }">
+        <v-row  class="m-width-100">
             <v-col
                 cols="3"
                 lg="1"
                 md="1"
+                :class="{ 'pl-4': $vuetify.breakpoint.mobile }"
             >
                 <v-avatar size="60px">
                     <v-img :src="gravatar"></v-img>
@@ -17,23 +18,23 @@
                 </v-col>
             </v-col>
         </v-row>
-        <v-row class="m-width-100">
-            <v-col cols="11" :class="{ 'mx-auto': editable }">
+        <v-row class="m-width-100" :class="{ 'pa-1': $vuetify.breakpoint.mobile }" >
+            <v-col cols="12" :class="{ 'mx-auto': editable }">
                 <template v-if="editable">
                     <input type="text" v-model="content">                    
                     <v-card-actions>
                         <v-btn color="primary" v-on:click="save">Save</v-btn>                                
                     </v-card-actions>
-                </template>
+                </template> 
                 <template v-else>
                     <p class="my-0">{{ content }}</p>
                 </template>                
             </v-col>
         </v-row>
         <template v-if="isLoggedIn && !editable">
-            <v-row>
+            <v-row no-gutters class="m-width-100">
                 <!-- Remove padding when in mobile mode and only top padding in regular  --- gives more space for elements -->
-                <v-col cols="12" class="commentbox__container pt-0" :class="{'pa-0': $vuetify.breakpoint.mobile }">
+                <v-col cols="12" class="commentbox__container pt-0">
                     <CommentBox :postId="postId" />
                 </v-col>
             </v-row>            
@@ -47,7 +48,7 @@
             </v-row>
         </template>
         <template v-if="!editable && isLoggedIn && userId == currentUserId">
-            <v-card-actions class="nf-item-float-menu">
+            <v-card-actions class="nf-item-float-menu" :class="{ 'pa-0': $vuetify.breakpoint.mobile, 'push-down': $vuetify.breakpoint.mobile }"> 
                 <PostMenu :postId="postId" />
             </v-card-actions>
         </template>
@@ -152,6 +153,10 @@ export default {
         top: 0;
         right: 0;
     }
+    
+    .push-down-1 {
+        top: 1rem;
+    }
 </style>
 <style scoped> 
     .nf-item {
@@ -194,59 +199,18 @@ export default {
         /* padding: 0px 12px; */
     }
 
-    .nf-item p {
+    /* .nf-item p {
         font-size: 1.2rem;
-    }
-
-    .nf-item img {
-        border-radius: 150px;
-        border: 1px solid #aaa;
-        /* box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.2); */
-        width: 100%;
-    }
-
-    .nf-item .avatar {
-        max-width: 60px;
-        padding-right: 0;
-    }
-
-    .nf-item .column {
-        flex-basis: auto;
-    }
-    .nf-item .column .field,
-    .nf-item .column /deep/ .field {
-        display: block;
-        width: 100%;
-        float: left;
-        text-align: left;
-    }    
-
-
-    .nf-item .time {
-        /* font-size: 1.2rem; */
+    }    */
+    
+    .nf-item .time {        
         color: grey;
     }
 
     .nf-item .username {
         color: steelblue;
     }
-
-    .controls {
-        top: 0;
-        right: 0;
-    }
-
-    .meta {
-        flex-direction: column;
-        align-items: flex-start;
-        display: flex;
-    }
-
-    .avatar {
-        justify-content: center;
-        align-content: center;
-    }
-
+   
     .nf-item input[type=text] {
         border: 1px solid #aaa;
         width: 100%;
