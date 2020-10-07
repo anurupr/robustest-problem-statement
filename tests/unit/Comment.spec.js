@@ -111,7 +111,7 @@ describe('Comment', () => {
           
 
     // check if comment is in mobile mode    
-    expect(wrapper.find('.content-container').classes('pa-0')).toBe(true)
+    expect(wrapper.find('.content-container').classes('mobile')).toBe(true)
 })
 
 })

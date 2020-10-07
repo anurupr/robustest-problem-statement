@@ -95,12 +95,13 @@ describe('Home', () => {
             username: 'test',
             password: 'test'
         })
+        await localVue.nextTick()
+        const event = jest.fn()
+        const button = wrapper.find('button[type=submit]')
+        button.vm.$on('click', event)
         await localVue.nextTick()        
         
-        const button = wrapper.find('button[type=submit]')
-        const event = jest.fn()
-
-        button.vm.$on('click', event)
+              
         expect(event).toHaveBeenCalledTimes(0)
         button.trigger('click')        
         await localVue.nextTick()

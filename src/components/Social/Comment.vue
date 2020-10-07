@@ -16,7 +16,18 @@
                     ></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="10" sm="11" md="11" lg="11" xl="11" class="content-container" :class="{ 'px-2': !modal && $vuetify.breakpoint.mobile, 'pl-4': $vuetify.breakpoint.lgAndUp }">
+            <v-col 
+                cols="10"
+                sm="11"
+                md="11"
+                lg="11"
+                xl="11"
+                class="content-container"
+                :class="{ 
+                    'mobile': $vuetify.breakpoint.mobile,                    
+                    'px-2': !modal && $vuetify.breakpoint.mobile,
+                    'pl-4': $vuetify.breakpoint.lgAndUp
+                }">
                 <v-col class="content pt-0">
                     <v-col class="d-flex flex-column align-start py-1 px-0">
                         <span class="field username">{{ username }}</span>
