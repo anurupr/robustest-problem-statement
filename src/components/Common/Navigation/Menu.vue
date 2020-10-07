@@ -13,19 +13,19 @@
       </template>
       <v-list>
         <!-- v-list-item extends router link properties , so it can use the same attributes -->
-        <v-list-item key="create-post" link to="/create-post" v-if="isLoggedIn">
+        <v-list-item class="create-post" key="create-post" link to="/create-post" v-if="isLoggedIn">
             <v-list-item-icon>
               <v-icon color="green" >fa-paper-plane</v-icon>
             </v-list-item-icon>
             <v-list-item-title>New Post</v-list-item-title>            
         </v-list-item>        
-        <v-list-item key="logout" link :to='{ name: "Logout" }' v-if="isLoggedIn">
+        <v-list-item class="logout" key="logout" link :to='{ name: "Logout" }' v-if="isLoggedIn">
             <v-list-item-icon>
               <v-icon color="primary">fa-sign-out</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Logout</v-list-item-title>            
         </v-list-item>
-        <v-list-item key="login" link :to='{ name: "Login" }' v-if="!isLoggedIn">
+        <v-list-item class="login" key="login" link :to='{ name: "Login" }' v-if="!isLoggedIn">
             <v-list-item-icon>
               <v-icon color="primary">fa-sign-in</v-icon>
             </v-list-item-icon>

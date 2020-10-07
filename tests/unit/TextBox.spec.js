@@ -1,15 +1,21 @@
+/* NOTE: 
+   Tests pass with error
+    [Vuetify] Multiple instances of Vue detected
+    See https://github.com/vuetifyjs/vuetify/issues/4068
+
+    If you're seeing "$attrs is readonly", it's caused by this
+ */
+
 import { mount, createLocalVue } from '@vue/test-utils'
 import { cgravatar } from '@/utils'
 import Vuex from 'vuex'
 
-import Column from '@/components/Common/Layout/Column'
 import TextBox from '@/components/Common/Input/TextBox'
-import Row from '@/components/Common/Layout/Row'
+import Vuetify from 'vuetify'
 
 const localVue = createLocalVue()
-localVue.component('column', Column)
-localVue.component('row', Row)
 localVue.use(Vuex)
+localVue.use(Vuetify)
 
 const factory = (opts = {}) => {
   return mount(TextBox, opts)
@@ -20,6 +26,7 @@ describe('TextBox', () => {
   let store
   let state 
   let getters
+  let vuetify
 
   beforeEach(() => {
     state = {
@@ -43,6 +50,8 @@ describe('TextBox', () => {
       state,
       getters
     })
+
+    vuetify = new Vuetify()
   })
 
   it('renders default textbox with placeholder', () => {
@@ -54,13 +63,13 @@ describe('TextBox', () => {
           value
         },
         localVue,
-        store
+        store,
+        vuetify
     })
-    expect(wrapper.find('.text__box').exists()).toBe(true)
+    expect(wrapper.find('.v-textarea').exists()).toBe(true)    
+    expect(wrapper.find('.v-textarea textarea').attributes('placeholder')).toBe(pholdertext)
 
-    expect(wrapper.find('textarea').attributes('placeholder')).toBe(pholdertext)
-
-    expect(wrapper.find('textarea').element.value).toBe(value)
+    expect(wrapper.find('.v-textarea textarea').element.value).toBe(value)
   })
 
 })

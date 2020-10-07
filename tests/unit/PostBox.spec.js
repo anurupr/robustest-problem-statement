@@ -1,20 +1,25 @@
+/* NOTE: 
+   Tests pass with error
+    [Vuetify] Multiple instances of Vue detected
+    See https://github.com/vuetifyjs/vuetify/issues/4068
+
+    If you're seeing "$attrs is readonly", it's caused by this
+ */
+
 import { mount, createLocalVue } from '@vue/test-utils'
 import PostBox from '@/components/Social/PostBox'
 import { cgravatar } from '@/utils'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
+import Vuetify from 'vuetify'
 
 import TextBox from '@/components/Common/Input/TextBox'
-import Column from '@/components/Common/Layout/Column'
-import Row from '@/components/Common/Layout/Row'
-
 
 const localVue = createLocalVue()
 localVue.component('text-box', TextBox)
-localVue.component('column', Column)
-localVue.component('row', Row)
 localVue.use(Vuex)
 localVue.use(VueRouter)
+localVue.use(Vuetify)
 
 const factory = (opts = {}) => {
   return mount(PostBox, opts)
@@ -28,6 +33,7 @@ describe('CommentBox', () => {
     let actions
     let getters 
     let store
+    let vuetify
 
     beforeEach(() => {
       actions = {
@@ -51,6 +57,8 @@ describe('CommentBox', () => {
         getters,
         actions
       })
+
+      vuetify = new Vuetify()
     })
 
     it('renders postbox', () => {   
@@ -59,36 +67,44 @@ describe('CommentBox', () => {
             postId: 1
           },
           store,
-          localVue
+          localVue,
+          vuetify
         });    
-        expect(wrapper.find('.text__box').exists()).toBe(true)
+        expect(wrapper.find('.post__box').exists()).toBe(true)
     })
 
-    it('call addErrorNotif action when content is empty', () => {   
-      const wrapper = factory({
-        propsData: {
-          postId: 1
-        },
-        store,
-        localVue
-      });
-      const button = wrapper.find('button')
-      button.trigger('click')    
-      expect(actions.addErrorNotif).toHaveBeenCalled()
-    })
-
-    it('call addComment action when content is empty', () => {   
+    it('nothing happens when content is empty', async () => {   
       const wrapper = factory({
         propsData: {
           postId: 1
         },
         store,
         localVue,
-        router
+        vuetify
+      });
+      const event = jest.fn()
+      const button = wrapper.find('button')
+      button.vm.$on('click', event)
+      button.trigger('click')
+      await localVue.nextTick()
+      expect(event).toHaveBeenCalledTimes(0)      
+    })
+
+    it('call addPost action when content is not empty', async () => {   
+      const wrapper = factory({
+        propsData: {
+          postId: 1
+        },
+        store,
+        localVue,
+        router,
+        vuetify
       });
       wrapper.setData({ content: "This is a post"})
+      await localVue.nextTick()
       const button = wrapper.find('button')
       button.trigger('click')    
+      await localVue.nextTick()
       expect(actions.addPost).toHaveBeenCalled()
     })
 

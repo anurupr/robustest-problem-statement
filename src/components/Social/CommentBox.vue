@@ -1,5 +1,5 @@
 <template>
-    <text-box :pholder="pholder" v-model="content">
+    <text-box :pholder="pholder" v-model="content" class="comment__box">
         <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn 

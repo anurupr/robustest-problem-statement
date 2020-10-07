@@ -1,6 +1,6 @@
 <template>
     <v-card class="pa-2">
-        <text-box :pholder="pholder" v-model="content">
+        <text-box :pholder="pholder" v-model="content" class="post__box">
             <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn 

@@ -12,13 +12,13 @@
       </template>
       <v-list>
         <!-- v-list-item extends router link properties , so it can use the same attributes -->
-        <v-list-item :key="'edit-comment' + postId" link :to='{ name: "edit-post", params: { id: postId } }'>            
+        <v-list-item class="edit-post" :key="'edit-post' + postId" link :to='{ name: "edit-post", params: { id: postId } }'>            
             <v-list-item-icon>
               <v-icon >fa-edit</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Edit</v-list-item-title>            
         </v-list-item>
-        <v-list-item :key="'delete-comment' + postId" link :to='{ name: "delete-post", params: { id: postId } }'>
+        <v-list-item class="delete-post" :key="'delete-post' + postId" link :to='{ name: "delete-post", params: { id: postId } }'>
             <v-list-item-icon>
               <v-icon>fa-trash</v-icon>
             </v-list-item-icon>

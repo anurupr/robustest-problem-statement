@@ -1,16 +1,22 @@
+/* NOTE: 
+   Tests pass with error
+    [Vuetify] Multiple instances of Vue detected
+    See https://github.com/vuetifyjs/vuetify/issues/4068
+
+    If you're seeing "$attrs is readonly", it's caused by this
+ */
+
 import { mount, createLocalVue } from '@vue/test-utils'
 import CommentBox from '@/components/Social/CommentBox'
 import { cgravatar } from '@/utils'
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
 import TextBox from '@/components/Common/Input/TextBox'
-import Column from '@/components/Common/Layout/Column'
-import Row from '@/components/Common/Layout/Row'
 
 const localVue = createLocalVue()
 localVue.component('text-box', TextBox)
-localVue.component('column', Column)
-localVue.component('row', Row)
 localVue.use(Vuex)
+localVue.use(Vuetify)
 
 const factory = (opts = {}) => {
   return mount(CommentBox, opts)
@@ -21,6 +27,7 @@ describe('CommentBox', () => {
     let actions
     let getters 
     let store
+    let vuetify
 
     beforeEach(() => {
       actions = {
@@ -44,6 +51,8 @@ describe('CommentBox', () => {
         getters,
         actions
       })
+
+      vuetify = new Vuetify()
     })
 
     it('renders commentbox', () => {   
@@ -52,9 +61,10 @@ describe('CommentBox', () => {
             postId: 1
           },
           store,
-          localVue
+          localVue,
+          vuetify
         });    
-        expect(wrapper.find('.text__box').exists()).toBe(true)
+        expect(wrapper.find('.comment__box').exists()).toBe(true)
     })
 
     it('call addErrorNotif action when content is empty', () => {   
@@ -63,7 +73,8 @@ describe('CommentBox', () => {
           postId: 1
         },
         store,
-        localVue
+        localVue,
+        vuetify  
       });
       const button = wrapper.find('button')
       button.trigger('click')    
@@ -76,7 +87,8 @@ describe('CommentBox', () => {
           postId: 1
         },
         store,
-        localVue
+        localVue,
+        vuetify  
       });
       wrapper.setData({ content: "This is a comment"})
       const button = wrapper.find('button')

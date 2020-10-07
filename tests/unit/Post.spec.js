@@ -1,16 +1,22 @@
+/* NOTE: 
+   Tests pass with error
+    [Vuetify] Multiple instances of Vue detected
+    See https://github.com/vuetifyjs/vuetify/issues/4068
+
+    If you're seeing "$attrs is readonly", it's caused by this
+ */
+
 import { mount, createLocalVue } from '@vue/test-utils'
 import { getutime, cgravatar, fromAgo } from '@/utils'
 import Vuex from 'vuex'
 import Post from '@/components/Social/Post'
 import TextBox from '@/components/Common/Input/TextBox'
-import Column from '@/components/Common/Layout/Column'
-import Row from '@/components/Common/Layout/Row'
+import Vuetify from 'vuetify'
 
 const localVue = createLocalVue()
 localVue.component('text-box', TextBox)
-localVue.component('column', Column)
-localVue.component('row', Row)
 localVue.use(Vuex)
+localVue.use(Vuetify)
 
 const factory = (opts = {}) => {
   return mount(Post, opts)
@@ -35,6 +41,7 @@ describe('Post', () => {
   let store
   let state
   let actions
+  let vuetify 
 
   beforeEach(() => {    
     state = {}
@@ -43,9 +50,9 @@ describe('Post', () => {
     }
     store = new Vuex.Store({      
       state,
-      actions
+      actions      
     })
-    
+    vuetify = new Vuetify()
   })
 
   it('renders post and calls loadComments action', async () => {            
@@ -54,7 +61,8 @@ describe('Post', () => {
           post  
         },
         store,
-        localVue
+        localVue,
+        vuetify
       })
       expect(wrapper.find('.post').exists()).toBe(true)
 
@@ -75,7 +83,8 @@ describe('Post', () => {
         editable: true          
       },
       store,
-      localVue
+      localVue,
+      vuetify
     })
 
     expect(wrapper.find('.post').exists()).toBe(true)

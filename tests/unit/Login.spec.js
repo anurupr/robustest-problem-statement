@@ -1,20 +1,23 @@
+/* NOTE: 
+   Tests pass with error
+    [Vuetify] Multiple instances of Vue detected
+    See https://github.com/vuetifyjs/vuetify/issues/4068
+
+    If you're seeing "$attrs is readonly", it's caused by this
+ */
 import { mount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
 
 import Login from '@/views/Login'
-import Column from '@/components/Common/Layout/Column'
-import Row from '@/components/Common/Layout/Row'
-import Container from '@/components/Common/Layout/Container'
 import Modal from '@/components/Common/Layout/Modal'
 
 const localVue = createLocalVue()
-localVue.component('column', Column)
-localVue.component('row', Row)
-localVue.component('container', Container)
 localVue.component('modal', Modal)
 localVue.use(VueRouter)
 localVue.use(Vuex)
+localVue.use(Vuetify)
 
 localVue.directive('focus', {
     // When the bound element is inserted into the DOM...
@@ -35,21 +38,27 @@ const router = new VueRouter({
 describe('Home', () => {
     let store
     let actions
+    let vuetify
 
     beforeEach(() => {
         actions = {
-            loginRequest: jest.fn()
+            loginRequest: jest.fn(),
+            modalVisible: jest.fn(),
+            addNotif: jest.fn()
         }
         store = new Vuex.Store({
             actions
         })
+
+        vuetify = new Vuetify()
     })
 
     it('renders login form', () => {
         const wrapper = factory({
           store,
           localVue,
-          router
+          router,
+          vuetify
         });
         expect(wrapper.find('form.login').exists()).toBe(true)
     })
@@ -58,10 +67,11 @@ describe('Home', () => {
         const wrapper = factory({
           store,
           localVue,
-          router
+          router,
+          vuetify
         });
 
-        const valid = wrapper.vm.validate()
+        const valid = wrapper.vm.$refs.form.validate()
         expect(valid).toBe(false)
 
     })
@@ -77,19 +87,27 @@ describe('Home', () => {
           store,
           localVue,
           router,
-          attachTo: '#root'
+          attachTo: '#root',
+          vuetify          
         });
 
         wrapper.setData({
             username: 'test',
             password: 'test'
         })
+        await localVue.nextTick()        
+        
+        const button = wrapper.find('button[type=submit]')
+        const event = jest.fn()
 
-
-        const button = wrapper.find('input[type=submit]')
-        button.trigger('click')
+        button.vm.$on('click', event)
+        expect(event).toHaveBeenCalledTimes(0)
+        button.trigger('click')        
         await localVue.nextTick()
-        expect(actions.loginRequest).toBeCalled()
+        expect(event).toHaveBeenCalledTimes(1)
+
+   
+        await expect(actions.loginRequest).toBeCalled()
         wrapper.destroy()
     })
 

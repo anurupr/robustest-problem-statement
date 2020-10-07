@@ -8,7 +8,7 @@
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="9" sm="9" md="11" lg="11" :class="{ 'pa-0': $vuetify.breakpoint.mobile }">
+            <v-col cols="9" sm="9" md="11" lg="11" class="content-container" :class="{ 'pa-0': $vuetify.breakpoint.mobile }">
                 <v-col class="content pt-0">
                     <v-col class="d-flex flex-column align-start py-1 px-0">
                         <span class="field username">{{ username }}</span>

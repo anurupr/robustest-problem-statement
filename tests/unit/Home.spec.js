@@ -1,19 +1,22 @@
+/* NOTE: 
+   Tests pass with error
+    [Vuetify] Multiple instances of Vue detected
+    See https://github.com/vuetifyjs/vuetify/issues/4068
+
+    If you're seeing "$attrs is readonly", it's caused by this
+ */
 import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import Vuetify from 'vuetify'
 
 import Home from '@/views/Home'
 import NewsFeed from '@/components/Social/NewsFeed'
-import Column from '@/components/Common/Layout/Column'
-import Row from '@/components/Common/Layout/Row'
-import Container from '@/components/Common/Layout/Container'
 
 const localVue = createLocalVue()
-localVue.component('column', Column)
-localVue.component('row', Row)
-localVue.component('container', Container)
 localVue.use(VueRouter)
 localVue.use(Vuex)
+localVue.use(Vuetify)
 
 const factory = (opts = {}) => {
     return mount(Home, opts)
@@ -31,6 +34,7 @@ describe('Home', () => {
     let store
     let state
     let actions
+    let vuetify
 
     beforeEach(() => {
         state = {
@@ -39,32 +43,35 @@ describe('Home', () => {
         }
 
         actions = {
-            loadPosts: jest.fn()
+            loadPosts: jest.fn(),
+            setInit: jest.fn()
         }
 
         store = new Vuex.Store({
             state,
             actions
         })
+
+        vuetify = new Vuetify()
     })
 
     it('renders container (shallowMount) without NewsFeed Component rendered - loadPosts not called', () => {
         const wrapper = sfactory({
             store,
             localVue,
-            // router
+            vuetify
         })
         // container component will not be rendered, there will only be a stub
-        expect(wrapper.find('.container').exists()).toBe(false)
-        // use findComponent instead
-        expect(wrapper.findComponent(Container).exists()).toBe(true)
+        expect(wrapper.find('.v-container').exists()).toBe(false)        
+        
     })
 
     it('renders container (mount) with NewsFeed component and action loadPosts should be called', async () => {
         const wrapper = factory({
           store,
           localVue,
-          router
+          router,
+          vuetify
         });
         expect(wrapper.find('.container').exists()).toBe(true)
         expect(wrapper.findComponent(NewsFeed).exists()).toBe(true)

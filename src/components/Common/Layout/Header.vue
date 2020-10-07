@@ -3,7 +3,7 @@
     <!-- app prop ensures the v-app-bar uses the correct amount of space and keeps the layout proper -->
     <v-app-bar app elevate-on-scroll>
         <v-img
-            class="pa-2"
+            class="pa-2 logo"
             src="@/assets/logo.png"
             max-height="80"
             max-width="80"
