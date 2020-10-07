@@ -1,14 +1,22 @@
 <template>
-    <v-card elevation="0" class="nf-item comment align-start pa-0">
-        <v-row class="m-width-100 ma-0">
-            <v-col cols="3"
+    <v-card elevation="0" class="nf-item comment align-start" :class="{ 'pa-0': $vuetify.breakpoint.smAndUp, 'pr-0': $vuetify.breakpoint.xsOnly }">
+        <v-row class="m-width-100 ma-0" :no-gutters="!modal">
+            <v-col cols="2"
+                xl="1"
                 lg="1"
-                md="1">
+                md="1"
+                sm="1"
+                class="d-flex justify-center"
+                :class="{ 'px-0': modal }"
+                >
                 <v-avatar size="50px">
-                    <v-img :src="gravatar"></v-img>
+                    <v-img 
+                    
+                   :src="gravatar"
+                    ></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="9" sm="9" md="11" lg="11" class="content-container" :class="{ 'pa-0': $vuetify.breakpoint.mobile }">
+            <v-col cols="10" sm="11" md="11" lg="11" xl="11" class="content-container" :class="{ 'px-2': !modal && $vuetify.breakpoint.mobile, 'pl-4': $vuetify.breakpoint.lgAndUp }">
                 <v-col class="content pt-0">
                     <v-col class="d-flex flex-column align-start py-1 px-0">
                         <span class="field username">{{ username }}</span>

@@ -1,7 +1,7 @@
 <template>
     <modal v-model="show" :showToolBar="false" :autoWidth="$vuetify.breakpoint.mobile">
-        <v-card class="pa-5">
-            <p>Are you sure you want to delete this post?</p>
+        <v-card class="pa-5 text-center">
+            <p class="pt-6">Are you sure you want to delete this post?</p>
             <v-card-actions class="justify-center">
                 <v-btn class="cancel" color="secondary" @click="cancel">Cancel</v-btn>
                 <v-btn class="proceed" color="primary" @click="proceed">Proceed</v-btn>

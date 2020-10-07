@@ -1,7 +1,7 @@
 <template>
     <v-card elevation="0" class="mx-1 my-0">
         <v-row no-gutters>
-            <v-col cols="2" lg="1" class="pt-4">                
+            <v-col cols="2" lg="1" class="pt-4 d-flex justify-center">                
                 <v-avatar>
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
@@ -15,7 +15,7 @@
                     <!-- refer to https://vuejs.org/v2/guide/components.html#Using-v-model-on-Components -->
                     <v-textarea dense  rows="1" no-resize v-bind:value="value" :placeholder="pholder" v-on:input="$emit('input', $event)" ></v-textarea>
                 </v-col>
-                <v-col cols="2" sm="1" class="pt-1">
+                <v-col cols="2" lg="1" class="pt-1">
                     <v-card-actions class="pa-0 d-flex justify-center">
                         <slot></slot>
                     </v-card-actions>

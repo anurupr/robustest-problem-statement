@@ -68,10 +68,7 @@ export default {
             })            
         } else {
             commit('LOGIN_FAILURE')
-            dispatch('addNotif', { 
-                type: "error",
-                message: "Invalid Username/Password"
-            })            
+            throw new Error("Invalid Username/Password")
         }           
     },
     async loadPosts({ commit, dispatch }) {

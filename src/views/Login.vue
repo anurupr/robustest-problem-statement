@@ -23,7 +23,7 @@
                     </v-col>
 
                     <v-col cols="12">
-                        <v-btn color="primary" type="submit">Login</v-btn>
+                        <v-btn color="primary" :disabled="!valid" :loading="loading" type="submit">Login</v-btn>
                     </v-col>
                 </v-row>
             </v-form>
@@ -40,6 +40,7 @@ export default {
             username: "",
             password: "",
             show: false,
+            loading: false,
             usernameRules: [
                 v => !!v || 'Username is required'
             ],
@@ -58,12 +59,15 @@ export default {
         async submit() {
             if (this.$refs.form.validate()) {
                 try {
+                    this.loading = true
                     await this.loginRequest({ username: this.username, password: this.password })
+                    this.loading = false
                     if (this.$route.path !== '/')
                         this.$router.push('/');
-                } catch(msg) {
-                    console.error('error', msg);
-                    this.addNotif({ type: 'error', message: 'Error! Please try again'})
+                } catch(message) {
+                    this.loading = false
+                    console.error('error', message);
+                    this.addNotif({ type: 'error', message })
                 }
             } else {
                 this.addNotif({ type: 'error', message: 'Error! Please try again'})

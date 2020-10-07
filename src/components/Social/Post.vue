@@ -1,25 +1,35 @@
 <template>
     <v-card class="nf-item post" :class="{ 'pa-2': $vuetify.breakpoint.mobile }">
-        <v-row  class="m-width-100">
+        
+        <v-row  class="m-width-100 ma-0" :class="{ 'pl-2': $vuetify.breakpoint.xlOnly }">
             <v-col
                 cols="3"
+                xl="1"
                 lg="1"
-                md="1"
-                :class="{ 'pl-4': $vuetify.breakpoint.mobile }"
+                md="1" 
+                sm="1"
+                class="d-flex justify-center"               
+                :class="{ 'px-0': $vuetify.breakpoint.mobile, 'pl-4': $vuetify.breakpoint.smAndUp }"
             >
                 <v-avatar size="60px">
-                    <v-img :src="gravatar"></v-img>
+                    <v-img 
+                    :src="gravatar"
+                    >
+                    </v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="9" sm="9" md="11" lg="11" class="pl-6">
+            <v-col cols="9" sm="10" md="10" lg="11" xl="11" :class="{ 
+                'pl-6': $vuetify.breakpoint.xlOnly, 
+                'px-6': $vuetify.breakpoint.smAndUp
+                }">
                 <v-col class="d-flex flex-column align-start py-1 px-0">
                     <span class="field username">{{ username }}</span>
                     <span class="field time">{{ timestamp }}</span>                    
                 </v-col>
             </v-col>
         </v-row>
-        <v-row class="m-width-100" :class="{ 'pa-1': $vuetify.breakpoint.mobile }" >
-            <v-col cols="12" :class="{ 'mx-auto': editable }">
+        <v-row class="m-width-100 ma-0" :class="{ 'pa-1': $vuetify.breakpoint.smAndUp }" >
+            <v-col cols="12"  :class="{ 'mx-auto': editable }">
                 <template v-if="editable">
                     <v-text-field placeholder="What's going on?" :rules="contentRules" type="text" v-model="content"></v-text-field>               
                     <v-card-actions>
@@ -116,7 +126,7 @@ export default {
         return this.getCurrentUser.id
       },
       gravatar() {
-        return this.post.user.gravatar
+        return this.post.user.gravatar        
       },
       username() {
         return this.post.user.name
