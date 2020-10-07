@@ -76,9 +76,9 @@ export default {
 
         // simulate delay
         await sleep(200)
-
-        const posts = await Posts.getPosts()
+        
         try {        
+            const posts = await Posts.getPosts()
             commit('SAVE_POSTS', posts)
             dispatch('resetLoading')
         } catch(error) {
