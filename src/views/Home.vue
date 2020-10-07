@@ -11,10 +11,10 @@
             sm="12"
             cols="12"
             :class="{ empty: !isLoggedIn && !$vuetify.breakpoint.mobile }" >
-            <template v-if="isLoading">
+            <template v-if="isLoading && !init">
               <v-skeleton-loader min-width="200" min-height="300" type="card-avatar"></v-skeleton-loader>
             </template>
-            <template v-if="isLoggedIn && !isLoading">
+            <template v-if="isLoggedIn && init">
               <Profile />
             </template>            
           </v-col>
@@ -26,7 +26,7 @@
             lg="6"
             xl="6"
             >
-            <template v-if="isLoading">
+            <template v-if="isLoading && !init">
               <v-skeleton-loader min-width="300" min-height="400"  type="card"></v-skeleton-loader>
             </template>            
             <router-view name="create-post" key='create-post' ></router-view>
@@ -56,9 +56,11 @@ export default {
         ...mapState([
             'isLoading',
             'isLoggedIn',
-            'posts'
+            'posts',
+            'init'
         ])
     }
+    
 }
 </script>
 

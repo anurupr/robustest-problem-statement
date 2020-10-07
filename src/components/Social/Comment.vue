@@ -16,9 +16,9 @@
                     </v-col>                
                     <v-col class="pa-0 pt-2">
                         <template v-if="editable">
-                            <input type="text" v-model="content">
+                            <v-text-field placeholder="Enter comment" :rules="contentRules" type="text" v-model="content"></v-text-field>
                             <v-card-actions class="pa-0">
-                                <v-btn color="primary" v-on:click="save">Save</v-btn>                                
+                                <v-btn color="primary" :disabled="!valid" :loading="loading" v-on:click="save">Save</v-btn>
                             </v-card-actions>
                         </template>
                         <template v-else>
@@ -54,6 +54,14 @@ export default {
             default: false
         }
     },
+    data() {
+        return {
+            contentRules: [
+                v => !!v || "Comment cannot be empty"
+            ],
+            loading: false
+        }
+    },
     components: {
        CommentMenu
     },
@@ -66,11 +74,14 @@ export default {
         delete: function() {
             this.deleteComment({ postId: this.postId , commentId: this.commentId })
         },
-        save: function() {           
-            // get content from element and save it in 
-            this.updateComment({ postId: this.postId, comment: this.comment })
-            if (this.$route.path !== '/')
-                this.$router.push('/')            
+        save: async function() {           
+            if(this.valid) {
+                this.loading = true
+                await this.updateComment({ postId: this.postId, comment: this.comment })
+                this.loading = false
+                if (this.$route.path !== '/')
+                    this.$router.push('/')            
+            }
         }        
     },
     computed: {
@@ -108,7 +119,10 @@ export default {
           set(content) {            
             this.comment.content = content
           }
-      }      
+      },
+      valid() {
+          return this.content != null && this.content.length > 0
+      }  
     }
 }
 </script>
@@ -173,8 +187,5 @@ export default {
         font-size: 1.1rem;
     }
 
-    .m-width-100 {
-        max-width: 100%;
-    }
-
+    
 </style>

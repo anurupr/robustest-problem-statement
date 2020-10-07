@@ -3,6 +3,9 @@ import * as types from './mutation_types'
 import getDefaultState from './state'
 
 export default {
+    [types.SET_INIT]: (state) => {
+        state.init = true
+    },
     [types.SET_LOADING]: (state, isLoading) => {
         state.isLoading = isLoading
     },
@@ -35,8 +38,10 @@ export default {
     [types.NOTIFICATION_REMOVE]: (state, notifIndex) => {        
         state.notifications.splice(notifIndex, 1)
     },
-    [types.POST_UPDATE]: (state, { postIndex, post }) => {        
-        Vue.set(state.posts, postIndex, post)
+    [types.POST_UPDATE]: (state, { postIndex, content }) => {     
+        let p = state.posts[postIndex]   
+        Vue.set(p, 'content', content)
+        Vue.set(state.posts, postIndex, p)
     },
     [types.POST_DELETE]: (state, { postIndex }) => {        
         state.posts.splice(postIndex, 1)
@@ -45,9 +50,9 @@ export default {
         state.posts[postIndex].comments.unshift(comment)
     },
     [types.COMMENT_UPDATE]: (state, { postIndex, commentIndex, comment }) => {        
-        let p = state.posts[postIndex]
-        p.comments[commentIndex] = comment
-        state.posts[postIndex] = p
+        let p = state.posts[postIndex]        
+        Vue.set(p.comments, commentIndex, comment)
+        Vue.set(state.posts, postIndex, p)
     },
     [types.COMMENT_DELETE]: (state, { postIndex, commentIndex }) => {          
         state.posts[postIndex].comments.splice(commentIndex, 1)

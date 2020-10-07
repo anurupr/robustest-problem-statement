@@ -63,10 +63,10 @@ export default {
                         this.$router.push('/');
                 } catch(msg) {
                     console.error('error', msg);
-                    addNotif({ type: 'error', message: 'Error! Please try again'})
+                    this.addNotif({ type: 'error', message: 'Error! Please try again'})
                 }
             } else {
-                addNotif({ type: 'error', message: 'Error! Please try again'})
+                this.addNotif({ type: 'error', message: 'Error! Please try again'})
             }
         },
         showModal() {

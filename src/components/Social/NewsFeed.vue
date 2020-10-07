@@ -13,7 +13,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'loadPosts'
+            'loadPosts',
+            'setInit'
         ])
     },
     computed: {
@@ -22,8 +23,9 @@ export default {
         })
     },
     mounted() {  
-        this.$nextTick(() => {      
-            this.loadPosts()
+        this.$nextTick(async () => {      
+            await this.loadPosts()
+            this.setInit()
         })
     }
     

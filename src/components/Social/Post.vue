@@ -21,9 +21,9 @@
         <v-row class="m-width-100" :class="{ 'pa-1': $vuetify.breakpoint.mobile }" >
             <v-col cols="12" :class="{ 'mx-auto': editable }">
                 <template v-if="editable">
-                    <input type="text" v-model="content">                    
+                    <v-text-field placeholder="What's going on?" :rules="contentRules" type="text" v-model="content"></v-text-field>               
                     <v-card-actions>
-                        <v-btn color="primary" v-on:click="save">Save</v-btn>                                
+                        <v-btn color="primary" :disabled="!valid" :loading="loading" v-on:click="save">Save</v-btn>                                
                     </v-card-actions>
                 </template> 
                 <template v-else>
@@ -40,7 +40,7 @@
             </v-row>            
         </template>
         <template v-if="comments.length > 0 && !editable">
-            <hr class="separator" />            
+            <v-divider></v-divider>            
             <v-row>
                 <v-col cols="12" class="comment__container">
                     <Comment v-for="comment in comments" :key="'comment-' + comment.id" :comment="comment" :post="post"></Comment>
@@ -76,6 +76,14 @@ export default {
         CommentBox,
         PostMenu
     },
+    data() {
+        return {
+            loading: false,
+            contentRules: [
+                v => !!v || 'Post cannot be empty'
+            ]
+        }
+    },
     methods: {
         ...mapActions([
             'deletePost',
@@ -86,12 +94,14 @@ export default {
             this.deletePost({ postId: this.post.id })
             
         },
-        save: function() {           
-            // get content from element and save it in            
-            this.updatePost(this.post)
-            console.log('this.$route.path', this.$route.path)
-            if (this.$route.path !== '/')
-                this.$router.push('/')
+        save: async function() {      
+            if (this.valid) {     
+                this.loading = true     
+                await this.updatePost(this.post)
+                this.loading = false
+                if (this.$route.path !== '/')
+                    this.$router.push('/')
+            }
         }
         
     },    
@@ -130,7 +140,10 @@ export default {
           set(content) {
             this.post.content = content
           }
-      } 
+      },
+      valid() {
+          return this.content != null && this.content.length > 0
+      }   
     },
       async mounted() { 
           // due to the async nature of vue's update queue, we need to wait until vue has finished updating
@@ -189,20 +202,13 @@ export default {
    
    .nf-item /deep/ p {        
         white-space: pre-wrap; /* in case user edits post / comment, this ensures that any line breaks are visible */
-        /* font-family: 'Segoe UI Historic', 'Segoe UI', Helvetica, Arial, sans-serif; */
-        
        
         /* this makes sure text is justified with proper spacing */
         text-align: justify;
         text-justify: distribute;
-        text-align-last: left;     
-        /* padding: 0px 12px; */
+        text-align-last: left;    
     }
 
-    /* .nf-item p {
-        font-size: 1.2rem;
-    }    */
-    
     .nf-item .time {        
         color: grey;
     }
@@ -216,11 +222,5 @@ export default {
         width: 100%;
         min-height: 40px;
         margin: 1rem auto;
-    }
-
-    .m-width-100 {
-        max-width: 100%;
-    }
-
-    
+    }    
 </style>

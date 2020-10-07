@@ -20,3 +20,5 @@ export const getutime = (t) => {
 
     return getUnixTime(t)
 }
+
+export const sleep = m => new Promise(r => setTimeout(r, m))

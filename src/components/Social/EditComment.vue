@@ -37,10 +37,8 @@ export default {
     },
     async mounted() {
         // get post and comment from api
-        this.post = await this.getPost(this.$route.params.postId)
-        console.log('this.post', this.post)        
-        this.comment = await this.getComment(this.$route.params.id)
-        console.log('this.comment', this.comment)
+        this.post = await this.getPost(this.$route.params.postId)             
+        this.comment = await this.getComment(this.$route.params.id)        
         // show modal only if post and comment is retrieved
         if (this.post != null && this.comment != null)
             this.showModal()        

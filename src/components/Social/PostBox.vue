@@ -1,17 +1,28 @@
 <template>
-    <text-box :pholder="pholder" v-model="content">
-        <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn color="primary" raised elevation="1" fab v-bind="attrs"
-          v-on="on" v-on:click="add">
-                    <v-icon dark>
-                        fa-paper-plane
-                    </v-icon>
-                </v-btn>
-            </template>
-            <span>Post</span>
-        </v-tooltip>
-    </text-box>
+    <v-card class="pa-2">
+        <text-box :pholder="pholder" v-model="content">
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn 
+                        color="primary"
+                        raised
+                        elevation="1"
+                        fab
+                        v-bind="attrs"
+                        v-on="on"
+                        v-on:click="add"
+                        :disabled="!valid"
+                        :loading="loading"
+                        >
+                        <v-icon dark>
+                            fa-paper-plane
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <span>Post</span>
+            </v-tooltip>
+        </text-box>
+    </v-card>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
@@ -23,15 +34,18 @@ export default {
             addPost: 'addPost',
             errorNotif: 'addErrorNotif'
         }),
-        add: function() {
-            if (this.content != "") {
+        add: async function() {
+            if (this.valid) {
                 var post = {
                     content: this.content,
                     user : this.getCurrentUser,
                     timestamp: getutime(),
                     comments: []      
                 }
-                this.addPost(post);
+                this.loading = true
+                await this.addPost(post)
+                this.loading = false
+
                 if (this.$route.path !== '/')
                     this.$router.push('/')
             } else {
@@ -42,26 +56,17 @@ export default {
     data()  {
         return {             
             pholder: "What's going on?",
-            content: ""
+            content: "",
+            loading: false
         }
     },
     computed: {
         ...mapGetters([
             'getCurrentUser'
-        ])
+        ]),
+        valid() {
+            return this.content != null && this.content.length > 0
+        }
     }
 }
 </script>
-<style scoped>
-.text__box .submit {
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 5px;
-    background: #33a2ff;
-    color: white;
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: bolder;
-    cursor: pointer;        
-}
-</style>
