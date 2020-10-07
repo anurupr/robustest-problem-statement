@@ -16,7 +16,6 @@
 </template>
 <script>
 import Menu from '@/components/Common/Navigation/Menu.vue'
-import Column from "@/components/Common/Layout/Column"
 
 export default {
     name: 'Header',
