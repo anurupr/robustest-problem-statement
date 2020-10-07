@@ -20,6 +20,17 @@ const factory = (opts = {}) => {
   return mount(Profile, opts)
 }
 
+<<<<<<< HEAD
+=======
+// https://vue-test-utils.vuejs.org/guides/common-tips.html#mocking-transitions
+const transitionStub = () => ({
+    render: function(h) {
+      return this.$options._renderChildren
+    }
+  })
+  
+
+>>>>>>> 3d900fdc12fbf0b38063d536f660c9bbbb86dd5f
 describe('Profile', () => {
     let vuetify
     let getters 
