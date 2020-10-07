@@ -15,5 +15,6 @@ export default {
         top: 70px;
         right: 1em;
         position: fixed;
+        z-index: 200; /* usual z-index set by modal overlays is 201 + */
     }
 </style>

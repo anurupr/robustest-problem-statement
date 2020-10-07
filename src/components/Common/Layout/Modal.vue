@@ -55,10 +55,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-    .unset-width{ 
-        width: unset;
-    }
-
-
-</style>

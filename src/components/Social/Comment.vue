@@ -1,6 +1,6 @@
 <template>
-    <v-card elevation="0" class="nf-item comment align-start">
-        <v-row class="m-width-100">
+    <v-card elevation="0" class="nf-item comment align-start pa-0">
+        <v-row class="m-width-100 ma-0">
             <v-col cols="3"
                 lg="1"
                 md="1">
@@ -8,7 +8,7 @@
                     <v-img :src="gravatar"></v-img>
                 </v-avatar>
             </v-col>
-            <v-col cols="9" sm="9" md="11" lg="11">
+            <v-col cols="9" sm="9" md="11" lg="11" :class="{ 'pa-0': $vuetify.breakpoint.mobile }">
                 <v-col class="content pt-0">
                     <v-col class="d-flex flex-column align-start py-1 px-0">
                         <span class="field username">{{ username }}</span>
@@ -126,52 +126,11 @@ export default {
     }
 }
 </script>
-<style scoped>    
-    .nf-item.comment {
-        box-shadow: none;
-        float: left;
-        width: 100%;
-        /* padding: 1rem; */
-        padding: 0;
-    } 
+<style scoped>
 
     .nf-item.comment .content {
         background: #f8f8f8;
         position: relative;
-    }
-
-    .nf-item img {
-        border-radius: 150px;
-        border: 1px solid #aaa;
-        /* box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.2); */
-        width: 100%;
-    }
-
-    .nf-item /deep/ img {
-        width: 45px;
-        height: 45px;
-    }
-
-    .controls {
-        top: 0;
-        right: 0;
-    }
-
-    .meta {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .avatar {
-        justify-content: center;
-        align-content: center;
-    }
-
-    .nf-item.comment .content input[type=text] {
-        border: 1px solid #aaa;
-        width: 100%;
-        min-height: 40px;
-        margin: 1rem auto;
     }
 
     .nf-item .username {
