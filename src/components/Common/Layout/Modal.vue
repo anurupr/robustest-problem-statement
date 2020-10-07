@@ -15,7 +15,6 @@
                 >
                     <v-btn
                         icon
-                        dark
                         @click="closeModal"
                     >
                         <v-icon>fa-window-close</v-icon>

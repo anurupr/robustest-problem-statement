@@ -12,7 +12,7 @@
                     v-on:click="add"
                     :loading="loading"
                     >
-                    <v-icon dark>
+                    <v-icon>
                         fa-comment
                     </v-icon>
                 </v-btn>

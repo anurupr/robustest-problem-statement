@@ -14,7 +14,7 @@
                         :disabled="!valid"
                         :loading="loading"
                         >
-                        <v-icon dark>
+                        <v-icon>
                             fa-paper-plane
                         </v-icon>
                     </v-btn>
