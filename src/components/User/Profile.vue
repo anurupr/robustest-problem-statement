@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card class="profile">
         <!-- https://github.com/vuetifyjs/vuetify/issues/8555 -->
         <!-- v-avatar under v-card loses border-radius -->
         <v-col
@@ -12,12 +12,7 @@
         </v-col>
         <v-card-title class="justify-center">{{ name }}</v-card-title>
         <v-card-subtitle class="text-center">{{ location }}</v-card-subtitle>
-    </v-card>
-    <!-- <div class="box" id="profile">
-        <div><img  ></div>
-        <span class="name">{{ name }}</span>
-        <span class="location">{{ location }}</span>
-    </div> -->
+    </v-card>   
 </template>
 <script>
 import { mapGetters } from 'vuex'
