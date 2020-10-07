@@ -43,7 +43,8 @@ export default {
         // get post using api is more preferred
         // if we get post from state , it will work only when the parent component is loaded first
         // this is also best practice
-        this.post = await this.getPost(this.$route.params.id)        
+        this.post = await this.getPost(this.$route.params.id)  
+        console.log('this.post', this.post)      
         // show modal only if post is loaded
         // error handling is done in action
         if (this.post != null)

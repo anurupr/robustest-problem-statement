@@ -3,8 +3,8 @@
         <v-card class="pa-5">
             <p>Are you sure you want to delete this comment?</p>
             <v-card-actions class="justify-center">
-                <v-btn color="secondary" @click="cancel">Cancel</v-btn>
-                <v-btn color="primary" @click="proceed">Proceed</v-btn>
+                <v-btn class="cancel" color="secondary" @click="cancel">Cancel</v-btn>
+                <v-btn class="proceed" color="primary" @click="proceed">Proceed</v-btn>
             </v-card-actions>
         </v-card>        
     </modal>   
